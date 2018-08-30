@@ -5,6 +5,14 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
+      <script type="text/javascript">
+        window.onresize = function(){
+          document.documentElement.style.fontSize = document.documentElement.clientWidth / 750 + 'px';
+        }
+        document.addEventListener('DOMContentLoaded',function(){
+          document.documentElement.style.fontSize = document.documentElement.clientWidth / 750 + 'px';
+        },false);
+      </script>
       <div id="appContainer"></div>
   </body>
 </html>

@@ -12,19 +12,22 @@ module.exports = {
   entry: {
     app: ['./src/index.tsx', 'webpack-hot-middleware/client?reload=true']
   },
+  resolve:{
+    extensions:['.tsx','.ts','.json','.js','.jsx','.scss']
+  },
   module: {
     rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env', 'react']
-          }
-        }
-      },
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+      // {
+      //   test: /\.jsx?$/,
+      //   exclude: /node_modules/,
+      //   use: {
+      //     loader: 'babel-loader',
+      //     options: {
+      //       presets: ['env', 'react']
+      //     }
+      //   }
+      // },
+      { test: /\.tsx?$/,use: [{loader: "babel-loader"},{loader: "awesome-typescript-loader"}] },
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
       // {
       //   test: /\.scss$/,
@@ -40,7 +43,16 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader
           },
-          "css-loader",
+          {
+            loader: "css-loader",
+            query: {
+                modules: true,
+                importLoaders: 1,
+                localIdentName: "[path]-[name]-[local]-[hash:base64:6]",
+                minimize: false,
+                sourceMap: true,
+            },
+        },
           "sass-loader"
         ]
       }

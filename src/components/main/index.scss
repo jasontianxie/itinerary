@@ -1,0 +1,11 @@
+.h1{
+    color:red;
+}
+.h2{
+    color:green;
+}
+:global(.wrap){
+    font-style: italic;
+    font-size: 20rem;
+    color:black;
+}

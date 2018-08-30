@@ -1,0 +1,24 @@
+{
+    "presets": [
+        [
+            "env",
+            {
+                "modules": false
+            }
+        ],
+        "react"
+    ],
+    "plugins": [
+        [
+            "react-css-modules",
+            {
+                "generateScopedName": "[path]-[name]-[local]-[hash:base64:6]",
+                "filetypes": {
+                    ".scss": {
+                      "syntax": "postcss-scss"
+                    }
+                  }
+            }
+        ]
+    ]
+}
