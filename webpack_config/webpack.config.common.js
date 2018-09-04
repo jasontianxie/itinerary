@@ -52,7 +52,7 @@ module.exports = {
         test: /\.svg$/,
         loader: 'svg-sprite-loader',
         options:{
-          symbolId: (p) => p
+          symbolId: '[folder]-[name]'
         }
       },
       {
