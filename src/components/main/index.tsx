@@ -8,7 +8,7 @@ import pic from '../../images/111.jpg';
 
 let a = style;
 
-class Greeting extends React.Component {
+class Main extends React.Component {
     render() {
       return <div className="wrap">
       <div styleName="style.h1">Hello main red component11111 <svg><use xlinkHref="#main-set"/></svg><input placeholder="synchronous"/></div>
@@ -16,4 +16,4 @@ class Greeting extends React.Component {
       </div>;
     }
   }
-  export {Greeting};
+  export {Main};
