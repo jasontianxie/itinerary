@@ -60,6 +60,7 @@
     "@types/react": "^16.4.12",
     "@types/react-css-modules": "^4.6.2",
     "@types/react-dom": "^16.0.7",
-    "babel-plugin-react-css-modules": "^3.4.2"
+    "babel-plugin-react-css-modules": "^3.4.2",
+    "react-router-dom": "^4.3.1"
   }
 }
