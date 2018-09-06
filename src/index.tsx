@@ -2,7 +2,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {Main} from './components/main/index';
-import {Second} from './components/second/index';
+import Second from './components/second/loadabale';
 import {BrowserRouter,HashRouter,Route,Link} from 'react-router-dom';
 import './index.scss';
 

@@ -3,10 +3,12 @@
         "outDir": "./dist/",
         "sourceMap": true,
         "noImplicitAny": true,
-        "module": "es2015",
+        "module": "esnext",
         "target": "es5",
         "jsx": "preserve",
-        "moduleResolution":"node"
+        "moduleResolution":"node",
+        "allowSyntheticDefaultImports": true,
+        "lib":["es2015","dom"]
     },
     "include": [
         "./src/**/*"

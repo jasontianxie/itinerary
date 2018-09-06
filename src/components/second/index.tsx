@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './index.scss';
 
-class Second extends React.Component {
+export default class Second extends React.Component {
     render() {
       return <div className="wrap">
       <div styleName="h1">Hello second blue component</div>
@@ -9,4 +9,4 @@ class Second extends React.Component {
       </div>;
     }
   }
-  export {Second};
+  // export {Second};
