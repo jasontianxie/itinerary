@@ -30,6 +30,11 @@ module.exports = {
         options:{
           symbolId: '[folder]-[name]'
         }
+      },
+      {
+        test: /(\.noneModules.css|antd.*\.css)$/,
+        use: [{loader:'style-loader'},{loader:'css-loader'}],
+        
       }
     ]
   },
