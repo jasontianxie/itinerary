@@ -1,8 +1,8 @@
 ///<reference path="./common.d.ts" />
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {Main} from './components/main/index';
-import Second from './components/second/loadabale';
+import {Main} from './pages/main/index';
+import Second from './pages/second/loadabale';
 import {HashRouter,Route} from 'react-router-dom';
 import './index.scss';
 
