@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './index.scss';
+import style from './index.scss';
 import  './index.noneModules.css';
 import { Carousel } from 'antd';
 import aa from '../../images/15380434541828.jpeg';
@@ -8,10 +8,10 @@ import ac from '../../images/15381045921996.jpeg';
 import ad from '../../images/15381046688621.jpeg';
 import ae from '../../images/15381048978867.jpeg';
 
-
+let a = style;
 class Main extends React.Component {
   render() {
-    return (<div styleName="wrap">
+    return (<div styleName="style.wrap">
       <Carousel autoplay={true}>
         <div><img src={aa} alt=""/></div>
         <div><img src={ab} alt=""/></div>
