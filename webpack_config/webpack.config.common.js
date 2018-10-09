@@ -14,7 +14,7 @@ module.exports = {
       { test: /\.tsx?$/,use: [{loader: "babel-loader"},{loader: "awesome-typescript-loader"}] },
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
       {
-        test: /\.(png|jpg|gif)$/i,
+        test: /\.(png|jpg|gif|jpeg)$/i,
         use: [
           {
             loader: 'url-loader',
