@@ -13,12 +13,18 @@ class Main extends React.Component<any,any> {
   constructor(props:any){
     super(props);
     this.state = {
-      headSlideData:[1,2,3,4,5]
+      carouselData:[1,2,3,4,5]
     }
+  }
+  componentWillMount(){
+    this.fetchCarouselData();
+  }
+  fetchCarouselData(){
+    
   }
   render() {
     return (<div styleName="style.wrap">
-              <CarouselCustom slideData={this.state.headSlideData}/>
+              <CarouselCustom slideData={this.state.carouselData}/>
             </div>);
   }
 }
