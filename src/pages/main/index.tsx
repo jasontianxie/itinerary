@@ -1,6 +1,6 @@
 import * as React from 'react';
 import style from './index.scss';
-import  './index.noneModules.css';
+import './index.noneModules.css';
 import { CarouselCustom } from '../../components/carousel';
 // import aa from '../../images/15380434541828.jpeg';
 // import ab from '../../images/15381044615697.jpeg';
@@ -9,11 +9,17 @@ import { CarouselCustom } from '../../components/carousel';
 // import ae from '../../images/15381048978867.jpeg';
 
 let a = style;
-class Main extends React.Component {
+class Main extends React.Component<any,any> {
+  constructor(props:any){
+    super(props);
+    this.state = {
+      headSlideData:[1,2,3,4,5]
+    }
+  }
   render() {
     return (<div styleName="style.wrap">
-      <CarouselCustom/>
-    </div>);
+              <CarouselCustom slideData={this.state.headSlideData}/>
+            </div>);
   }
 }
 export { Main };
