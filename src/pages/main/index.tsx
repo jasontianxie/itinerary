@@ -22,8 +22,9 @@ class Main extends React.Component<any,any> {
     this.fetchCarouselData();
   }
   fetchCarouselData(){
-    axios.get(config.mainDomain+'/mainPageSlideData.json').then(function (response) {
-      console.log(response);
+    axios.get(config.mainDomain+'/mainPageSlideData.json').then( (response) => {
+      // console.log(response.data);
+      this.setState({carouselData:response.data})
     })
     .catch(function (error) {
       console.log(error);

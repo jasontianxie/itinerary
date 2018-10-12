@@ -4,6 +4,8 @@ import './index.noneModules.css';
 import style from './index.scss';
 
 let varStyle = style;
+
+
 interface PropsStyle {
     slideData:any[]
 }
