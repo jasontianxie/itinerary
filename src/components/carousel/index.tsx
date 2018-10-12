@@ -5,9 +5,14 @@ import style from './index.scss';
 
 let varStyle = style;
 
+interface SlideInfo {
+    pic:string
+    href:string
+    description:string
+}
 
 interface PropsStyle {
-    slideData:any[]
+    slideData: (number | SlideInfo)[]
 }
 class CarouselCustom extends React.Component <PropsStyle,any>{
     constructor(props:PropsStyle){
@@ -18,7 +23,9 @@ class CarouselCustom extends React.Component <PropsStyle,any>{
       return (<div>
         <Carousel autoplay={true}>
            {slideData.map((item:any,index:number)=>{
-                return (<div styleName='style.imgWrap' key = {index}>{typeof(item) ==='number'?'Loading': <img src={item.pic} alt=""/>}</div>);
+                  return (<div styleName='style.imgWrap' key={index}>
+                      {typeof (item) === 'number' ? 'Loading' : <a href={item.href}><img src={item.pic} alt="" /></a>}
+                  </div>);
             })} 
         </Carousel>
       </div>);
