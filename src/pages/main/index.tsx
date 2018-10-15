@@ -37,7 +37,7 @@ class Main extends React.Component<any,any> {
       <div>
         <CarouselCustom slideData={this.state.carouselData} />
         <div styleName="style.tabWrap">
-          <Tabs type="card" size="small">
+          <Tabs type="card">
             <TabPane tab="Tab 1" key="1">
               <RangePicker onChange={this.datePickerOnChange} showTime={true} format="YYYY-MM-DD HH:mm:ss" placeholder={['startDateTime','endDateTime']}/>
             </TabPane>
