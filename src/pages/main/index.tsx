@@ -11,6 +11,7 @@ const TabPane = Tabs.TabPane;
 const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
 const Search = Input.Search;
+let timerHandler:any =null;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -86,13 +87,18 @@ class DecorateMain extends React.Component<any, any> {
     });
   }
   handleSearch = (value: any) => {
-    this.setState({
-      dataSource: !value ? [] : [
-        value,
-        value + value,
-        value + value + value,
-      ],
-    });
+  
+    if(timerHandler) {
+      window.clearTimeout(timerHandler);
+    }
+    timerHandler = window.setTimeout(()=>{
+      axios.get(config.mainDomain + '/mainPageSpotsData.json?search='+value).then((response) => {
+        this.setState({ dataSource: response.data })
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },1000);//search delay for 1 second
   }
   onSelect(value: any) {
     console.log('onSelect', value);
