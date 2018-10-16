@@ -9,6 +9,11 @@
     width: 100%;
     height: 100%;
   }
+  .ant-tabs{
+    width: 520px;
+  }
   .ant-tabs-content{
-    background: #fff;
+    background: rgba(255,255,255,0.9);
+    padding:10px;
+    border-radius: 5px;
   }
