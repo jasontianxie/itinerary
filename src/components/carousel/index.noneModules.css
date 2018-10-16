@@ -17,3 +17,9 @@
     padding:10px;
     border-radius: 5px;
   }
+  .ant-list-item-extra-wrap{
+    flex-direction: row-reverse;
+  }
+  .ant-list-item-extra{
+    margin-right: 58px;
+  }
