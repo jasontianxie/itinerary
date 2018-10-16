@@ -91,6 +91,10 @@ class DecorateMain extends React.Component<any, any> {
     if(timerHandler) {
       window.clearTimeout(timerHandler);
     }
+    if(value === ''){
+      this.setState({ dataSource: []});
+      return;
+    }
     timerHandler = window.setTimeout(()=>{
       axios.get(config.mainDomain + '/mainPageSpotsData.json?search='+value).then((response) => {
         this.setState({ dataSource: response.data })
