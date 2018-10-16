@@ -21,5 +21,6 @@
     flex-direction: row-reverse;
   }
   .ant-list-item-extra{
+    margin-left: 0 !important;
     margin-right: 58px;
   }
