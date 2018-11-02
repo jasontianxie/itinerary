@@ -9,6 +9,7 @@ module.exports = {
   resolve:{
     extensions:['.tsx','.ts','.json','.js','.jsx','.scss']
   },
+  externals:{'BMap':'BMap'},
   module: {
     rules: [
       { test: /\.tsx?$/,use: [{loader: "babel-loader"},{loader: "awesome-typescript-loader"}] },

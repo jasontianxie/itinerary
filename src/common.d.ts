@@ -10,3 +10,9 @@ declare module '*common/ajaxConfig.js' {
     const config:AjaxConfig;
     export {config};
 }
+// interface Window {
+//     BMap:any
+// }
+// declare var window:Window
+
+declare module 'BMap';

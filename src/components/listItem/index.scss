@@ -1,6 +1,9 @@
 .listWrap{
     display: flex;
+    align-items: center;
 }
 .listSecond{
     width: 272px;
+    height: 168px;
+    flex-shrink: 0;
 }
