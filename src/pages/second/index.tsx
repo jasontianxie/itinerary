@@ -110,9 +110,14 @@ class Second extends React.Component<any,any> {
               </FormItem>
               <FormItem
                 label="等待时间"
-                {...formItemLayoutTwoInRow}
+                {...formItemLayout}
               >
-                222
+                {getFieldDecorator('waitHours', {})(
+                  <Input styleName="waitTime"/>
+                )}<span>小时</span>
+                {getFieldDecorator('waitMinutes', {})(
+                  <Input styleName="waitTime"/>
+                )}<span>分钟</span>
               </FormItem>
               <FormItem
                 label="交通工具"
