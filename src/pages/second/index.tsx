@@ -2,6 +2,9 @@ import * as React from 'react';
 import './index.scss';
 
 export default class Second extends React.Component {
+    componentWillMount(){
+      document.title = 'second'
+    }
     render() {
       return <div className="wrap">
       <div styleName="h1">Hello second blue component</div>
