@@ -9,13 +9,12 @@
 }
 .content{
     display: flex;
+    flex-direction: column;
     width: 1200px;
     margin: 0 auto;
     padding: 50px;
-    .notification{
-        width:260px;
-        margin-right: 50px;
-        background: rgba(0, 255, 0, 0.1)
+    .contentHeader{
+        background: transparent;
     }
     .listWrap{
         flex: 1;

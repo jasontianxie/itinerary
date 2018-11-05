@@ -175,7 +175,9 @@ class DecorateMain extends React.Component<any, any> {
           </div>
         </div>
         <div styleName="style.content">
-          {/* <div styleName="style.notification">left side pane</div> */}
+          <div styleName="style.contentHeader">
+            <Button href="/#/second" target="_blank">写游记</Button>
+          </div>
           <div styleName="style.listWrap">
             <List
               itemLayout="vertical"

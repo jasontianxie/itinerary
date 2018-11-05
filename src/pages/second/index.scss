@@ -1,11 +1,25 @@
-.h1{
+.detailRecord{
     color:blue;
+    flex-grow: 1;
 }
-.h2{
+.itinerary{
+    width: 500px;
     color:purple;
+    :global(.ant-list-item-content){
+        flex-direction: column;
+    }
+    :global(.ant-calendar-picker){
+        width: 100% !important;
+    }
+    :global(.ant-form-item){
+        margin-bottom: 5px;
+    }
 }
 :global(.wrap){
-    font-weight: bold;
+    display: flex;
+    // flex-direction: column;
+    width: 1200px;
+    margin: 0 auto;
+    padding: 50px;
     font-size: 0.3rem;
-    color:black;
 }
