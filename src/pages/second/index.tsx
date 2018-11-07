@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './index.scss';
 import { List, Form, Input, InputNumber, DatePicker, Button, Col, Select } from 'antd';
+import {LazyOptions} from '../../components/cascader'
 
 const data = [
   {startSpot:'chonging',endSpot:'chengdu',startTime:'2018-11-01 12:00:00',endTime:'2018-11-01 13:00:00',spentTime:'0d1h0m0s',waitTime:'1h',vehicle:'高铁',cost:'100RMB',comments:''},
@@ -53,21 +54,11 @@ class Second extends React.Component<any,any> {
       const formItemLayout = {
         labelCol: {
           xs: { span: 24 },
-          sm: { span: 4 },
+          sm: { span: 6 },
         },
         wrapperCol: {
           xs: { span: 24 },
-          sm: { span: 20 },
-        },
-      };
-      const formItemLayoutTwoInRow = {
-        labelCol: {
-          xs: { span: 24 },
-          sm: { span: 4 },
-        },
-        wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 8 },
+          sm: { span: 18 },
         },
       };
       const tailFormItemLayout = {
@@ -77,8 +68,8 @@ class Second extends React.Component<any,any> {
             offset: 0,
           },
           sm: {
-            span: 20,
-            offset: 4,
+            span: 18,
+            offset: 6,
           },
         },
       };
@@ -89,7 +80,13 @@ class Second extends React.Component<any,any> {
           <div styleName="itinerary">
             <Form onSubmit={this.handleSubmit}>
               <FormItem
-                label="出发地"
+                label="选择出发地"
+                {...formItemLayout}
+              >
+                <LazyOptions />
+              </FormItem>
+              <FormItem
+                label="出发地具体名称"
                 {...formItemLayout}
               >
                 {getFieldDecorator('startSpot', {
@@ -101,7 +98,13 @@ class Second extends React.Component<any,any> {
                 )}
               </FormItem>
               <FormItem
-                label="目的地"
+                label="选择目的地"
+                {...formItemLayout}
+              >
+                <LazyOptions />
+              </FormItem>
+              <FormItem
+                label="目的地具体名称"
                 {...formItemLayout}
               >
                 {getFieldDecorator('endSpot', {
@@ -126,7 +129,7 @@ class Second extends React.Component<any,any> {
               </FormItem>
               <FormItem
                 label="耗时"
-                {...formItemLayoutTwoInRow}
+                {...formItemLayout}
               >
                 222
               </FormItem>
@@ -153,7 +156,7 @@ class Second extends React.Component<any,any> {
               </FormItem>
               <FormItem
                 label="交通工具"
-                {...formItemLayoutTwoInRow}
+                {...formItemLayout}
               >
                 <Select defaultValue="flight">
                   <Option value="flight">飞机</Option>
@@ -180,7 +183,7 @@ class Second extends React.Component<any,any> {
               </FormItem>
               <FormItem
                 label="费用"
-                {...formItemLayoutTwoInRow}
+                {...formItemLayout}
               >
                 <InputNumber styleName="waitTime" min={0} defaultValue={0} onChange={this.setCost}/>RMB
               </FormItem>
