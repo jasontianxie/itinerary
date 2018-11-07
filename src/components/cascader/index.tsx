@@ -11,13 +11,16 @@ const options = [{
   isLeaf: false,
 }];
 
-export class LazyOptions extends React.Component {
-  state = {
-    options,
-  };
+export class LazyOptions extends React.Component<any,any> {
+    constructor(props:any){
+        super(props);
+        this.state = {options}
+        this.onChange = this.onChange.bind(this);
+    }
 
   onChange = (value:any, selectedOptions:any) => {
-    console.log(value, selectedOptions);
+    // console.log(value, selectedOptions);
+    this.props.getlazyloadCascader(this.props.index,value);
   }
 
   loadData = (selectedOptions:any) => {
@@ -37,7 +40,7 @@ export class LazyOptions extends React.Component {
       this.setState({
         options: [...this.state.options],
       });
-    }, 1000);
+    }, 500);
   }
 
   render() {

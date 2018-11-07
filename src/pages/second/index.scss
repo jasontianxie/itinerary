@@ -8,18 +8,6 @@
     :global(.ant-list-item-content){
         flex-direction: column;
     }
-    :global(.ant-calendar-picker){
-        width: 100% !important;
-    }
-    :global(.ant-form-item){
-        margin-bottom: 5px;
-    }
-    :global(.ant-form-item-children){
-        display: flex;
-        .waitTime{
-            width:100%;
-        }
-    }
 }
 :global(.wrap){
     display: flex;
