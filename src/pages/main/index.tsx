@@ -5,14 +5,16 @@ import { CarouselCustom } from '../../components/carousel';
 import { config } from '../../common/ajaxConfig.js';
 import ListItem from '../../components/listItem';
 import axios from 'axios';
-import { Tabs, DatePicker, Form, Button, AutoComplete, Input , List, Avatar, Icon} from 'antd';
+import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Avatar, Icon } from 'antd';
+import { connect } from 'react-redux';
+import { getSearchData } from '../../../redux/actions/mainPageState.js'
 
 let a = style;
 const TabPane = Tabs.TabPane;
 const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
 const Search = Input.Search;
-let timerHandler:any =null;
+let timerHandler: any = null;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -35,7 +37,7 @@ const tailFormItemLayout = {
     },
   },
 };
-const listData:any[] = [];
+const listData: any[] = [];
 for (let i = 0; i < 23; i++) {
   listData.push({
     href: 'http://ant.design',
@@ -87,30 +89,31 @@ class DecorateMain extends React.Component<any, any> {
       }
     });
   }
-  handleSearch = (value: any) => {
-  
-    if(timerHandler) {
+  handleSearch = (index: number, value: any) => {
+
+    if (timerHandler) {
       window.clearTimeout(timerHandler);
     }
-    if(value === ''){
-      this.setState({ dataSource: []});
+    if (value === '') {
+      // this.setState({ dataSource: []});
       return;
     }
-    timerHandler = window.setTimeout(()=>{
-      axios.get(config.mainDomain + '/mainPageSpotsData.json?search='+value).then((response) => {
-        this.setState({ dataSource: response.data })
-      })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },1000);//search delay for 1 second
+    timerHandler = window.setTimeout(() => {
+      // axios.get(config.mainDomain + '/mainPageSpotsData.json?search='+value).then((response) => {
+      //   this.setState({ dataSource: response.data })
+      // })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+      this.props.handleSearch(index, value);
+    }, 1000);//search delay for 1 second
   }
   onSelect(value: any) {
     console.log('onSelect', value);
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { dataSource } = this.state;
+    const { searchResult } = this.props;
 
     return (
       <div styleName="style.wrap">
@@ -143,10 +146,10 @@ class DecorateMain extends React.Component<any, any> {
                       }],
                     })(
                       <AutoComplete
-                        dataSource={dataSource}
+                        dataSource={searchResult.dataSource1}
                         style={{ width: 350 }}
                         onSelect={this.onSelect}
-                        onSearch={this.handleSearch}
+                        onSearch={(value) => this.handleSearch(1, value)}
                         placeholder="开始地点名称"
                       />
                     )}
@@ -158,10 +161,10 @@ class DecorateMain extends React.Component<any, any> {
                       }],
                     })(
                       <AutoComplete
-                        dataSource={dataSource}
+                        dataSource={searchResult.dataSource2}
                         style={{ width: 350 }}
                         onSelect={this.onSelect}
-                        onSearch={this.handleSearch}
+                        onSearch={(value) => this.handleSearch(2, value)}
                         placeholder="结束地点名称"
                       />
                     )}
@@ -190,14 +193,25 @@ class DecorateMain extends React.Component<any, any> {
               }}
               dataSource={listData}
               footer={<div><b>ant design</b> footer part</div>}
-              renderItem={(item:any) => (
-                <ListItem item={item}/>
+              renderItem={(item: any) => (
+                <ListItem item={item} />
               )}
             />
-          </div>        
+          </div>
         </div>
       </div>);
   }
 }
 const Main = Form.create()(DecorateMain);
-export { Main };
+const mapStateToProps=(state: any)=>{
+  console.log(state);
+  return({
+  searchResult: state.mainPageState
+})};
+const mapDispatchToProps = (dispatch: any) => ({
+  handleSearch: (index: number, value: string) => dispatch(getSearchData(index, value))
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main);

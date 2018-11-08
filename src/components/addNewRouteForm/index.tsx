@@ -1,12 +1,15 @@
 import * as React from 'react';
 import './index.scss';
-import { Form, Input, InputNumber, DatePicker, Button, Col, Select } from 'antd';
-import { LazyOptions } from '../../components/cascader'
+import { Form, Input, InputNumber, DatePicker, Button, Col, Select, AutoComplete } from 'antd';
+import { LazyOptions } from '../../components/cascader';
+import axios from 'axios';
+import { config } from '../../common/ajaxConfig.js';
 
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
 const { TextArea } = Input;
+let timerHandler:any =null;
 
 class AddNewRouteForm extends React.Component<any, any>{
     constructor(props: any) {
@@ -23,7 +26,8 @@ class AddNewRouteForm extends React.Component<any, any>{
             waitTimeMinutes: 0,
             vehicle: 'flight',
             cost: 0,
-            comments: ''
+            comments: '',
+            dataSource: []
         }
         this.datePickerOnChange = this.datePickerOnChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,6 +37,8 @@ class AddNewRouteForm extends React.Component<any, any>{
         this.getlazyloadCascader = this.getlazyloadCascader.bind(this);
         this.getVehicle = this.getVehicle.bind(this);
         this.getComments = this.getComments.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.onSelect = this.onSelect.bind(this);
     }
     handleSubmit(e: any) {
         // e.persist();
@@ -70,8 +76,30 @@ class AddNewRouteForm extends React.Component<any, any>{
     getComments(e:any){
         this.setState({ comments: e.target.value })
     }
+    handleSearch = (value: any) => {
+  
+        if(timerHandler) {
+          window.clearTimeout(timerHandler);
+        }
+        if(value === ''){
+          this.setState({ dataSource: []});
+          return;
+        }
+        timerHandler = window.setTimeout(()=>{
+          axios.get(config.mainDomain + '/mainPageSpotsData.json?search='+value).then((response) => {
+            this.setState({ dataSource: response.data })
+          })
+            .catch(function (error) {
+              console.log(error);
+            });
+        },1000);//search delay for 1 second
+      }
+      onSelect(value: any) {
+        console.log('onSelect', value);
+      }
     render() {
         const { getFieldDecorator } = this.props.form;
+        const { dataSource } = this.state;
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -113,7 +141,13 @@ class AddNewRouteForm extends React.Component<any, any>{
                                 required: true, message: '输入出发地!',
                             }],
                         })(
-                            <Input />
+                            <AutoComplete
+                                dataSource={dataSource}
+                                style={{ width: 350 }}
+                                onSelect={this.onSelect}
+                                onSearch={this.handleSearch}
+                                placeholder="开始地点名称"
+                            />
                         )}
                     </FormItem>
                     <FormItem
@@ -131,7 +165,13 @@ class AddNewRouteForm extends React.Component<any, any>{
                                 required: true, message: '输入目的地!',
                             }],
                         })(
-                            <Input />
+                            <AutoComplete
+                                dataSource={dataSource}
+                                style={{ width: 350 }}
+                                onSelect={this.onSelect}
+                                onSearch={this.handleSearch}
+                                placeholder="开始地点名称"
+                            />
                         )}
                     </FormItem>
                     <FormItem
