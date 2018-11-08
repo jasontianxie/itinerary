@@ -15,8 +15,8 @@ class AddNewRouteForm extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
-            startSelect: '',
-            endSelect: '',
+            startSelect: [],
+            endSelect: [],
             startSpot: '',
             endSpot: '',
             startTime: '',
@@ -27,7 +27,8 @@ class AddNewRouteForm extends React.Component<any, any>{
             vehicle: 'flight',
             cost: 0,
             comments: '',
-            dataSource: []
+            dataSource1: [],
+            dataSource2: [],
         }
         this.datePickerOnChange = this.datePickerOnChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -76,18 +77,18 @@ class AddNewRouteForm extends React.Component<any, any>{
     getComments(e:any){
         this.setState({ comments: e.target.value })
     }
-    handleSearch = (value: any) => {
+    handleSearch = (index:number,value: any) => {
   
         if(timerHandler) {
           window.clearTimeout(timerHandler);
         }
         if(value === ''){
-          this.setState({ dataSource: []});
+            this.setState({ ['dataSource'+index]: []});
           return;
         }
         timerHandler = window.setTimeout(()=>{
-          axios.get(config.mainDomain + '/mainPageSpotsData.json?search='+value).then((response) => {
-            this.setState({ dataSource: response.data })
+          axios.post(config.mainDomain + '/mainPageSpotsData.json',{value:this.state[index === 1?'startSelect':'endSelect'].concat(value)}).then((response) => {
+            this.setState({ ['dataSource'+index]: response.data })
           })
             .catch(function (error) {
               console.log(error);
@@ -99,7 +100,7 @@ class AddNewRouteForm extends React.Component<any, any>{
       }
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { dataSource } = this.state;
+        const { dataSource1, dataSource2 } = this.state;
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -142,10 +143,10 @@ class AddNewRouteForm extends React.Component<any, any>{
                             }],
                         })(
                             <AutoComplete
-                                dataSource={dataSource}
+                                dataSource={dataSource1}
                                 style={{ width: 350 }}
                                 onSelect={this.onSelect}
-                                onSearch={this.handleSearch}
+                                onSearch={(value)=>this.handleSearch(1,value)}
                                 placeholder="开始地点名称"
                             />
                         )}
@@ -166,10 +167,10 @@ class AddNewRouteForm extends React.Component<any, any>{
                             }],
                         })(
                             <AutoComplete
-                                dataSource={dataSource}
+                                dataSource={dataSource2}
                                 style={{ width: 350 }}
                                 onSelect={this.onSelect}
-                                onSearch={this.handleSearch}
+                                onSearch={(value)=>this.handleSearch(2,value)}
                                 placeholder="开始地点名称"
                             />
                         )}
