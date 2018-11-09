@@ -144,7 +144,7 @@ class AddNewRouteForm extends React.Component<any, any>{
                         })(
                             <AutoComplete
                                 dataSource={dataSource1}
-                                style={{ width: 350 }}
+                                style={{ width: '100%' }}
                                 onSelect={this.onSelect}
                                 onSearch={(value)=>this.handleSearch(1,value)}
                                 placeholder="开始地点名称"
@@ -168,7 +168,7 @@ class AddNewRouteForm extends React.Component<any, any>{
                         })(
                             <AutoComplete
                                 dataSource={dataSource2}
-                                style={{ width: 350 }}
+                                style={{ width: '100%' }}
                                 onSelect={this.onSelect}
                                 onSearch={(value)=>this.handleSearch(2,value)}
                                 placeholder="开始地点名称"
