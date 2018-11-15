@@ -2,12 +2,12 @@ import { Cascader } from 'antd';
 import * as React from 'react';
 
 const options = [{
-  value: 'zhejiang',
-  label: 'Zhejiang',
+  value: '重庆',
+  label: '重庆',
   isLeaf: false,
 }, {
-  value: 'jiangsu',
-  label: 'Jiangsu',
+  value: '陕西',
+  label: '陕西',
   isLeaf: false,
 }];
 
