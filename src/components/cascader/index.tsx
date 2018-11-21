@@ -31,11 +31,11 @@ export class LazyOptions extends React.Component<any,any> {
     setTimeout(() => {
       targetOption.loading = false;
       targetOption.children = [{
-        label: `${targetOption.label} Dynamic 1`,
-        value: 'dynamic1',
+        label: targetOption.label == '重庆'?'永川区':'西安市',
+        value: targetOption.label == '重庆'?'永川区':'西安市'
       }, {
-        label: `${targetOption.label} Dynamic 2`,
-        value: 'dynamic2',
+        label: targetOption.label == '重庆'?'大足区':'咸阳市',
+        value: targetOption.label == '重庆'?'大足区':'咸阳市',
       }];
       this.setState({
         options: [...this.state.options],
