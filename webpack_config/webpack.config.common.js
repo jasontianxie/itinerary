@@ -39,7 +39,7 @@ module.exports = {
         }
       },
       {
-        test: /(\.noneModules.css|antd.*\.css)$/,
+        test: /(\.noneModules.css|antd.*\.css|react-draft-wysiwyg\.css)$/,
         use: [{loader:'style-loader'},{loader:'css-loader'}],
         
       }

@@ -1,7 +1,9 @@
 import * as React from 'react';
-import './index.scss';
+import style from './index.scss';
 import { List } from 'antd';
-import AddNewRouteForm from '../../components/addNewRouteForm'
+import AddNewRouteForm from '../../components/addNewRouteForm';
+import { Editor } from 'react-draft-wysiwyg';
+import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const data = [
   {startSpot:'chonging',endSpot:'chengdu',startTime:'2018-11-01 12:00:00',endTime:'2018-11-01 13:00:00',spentTime:'0d1h0m0s',waitTime:'1h',vehicle:'高铁',cost:'100RMB',comments:''},
@@ -11,7 +13,7 @@ const data = [
   {startSpot:'chonging',endSpot:'chengdu',startTime:'2018-11-01 12:00:00',endTime:'2018-11-01 13:00:00',spentTime:'0d1h0m0s',waitTime:'1h',vehicle:'高铁',cost:'100RMB',comments:''},
 ];
 
-
+let a = style; 
 class Second extends React.Component<any,any> {
     componentWillMount(){
       document.title = '新增游记'
@@ -19,8 +21,14 @@ class Second extends React.Component<any,any> {
     render() {
       return (
       <div className="wrap">
-        <div styleName="detailRecord">this panel is for itinerary details</div>
-          <div styleName="itinerary">
+        <div styleName="style.detailRecord">
+          <Editor
+            wrapperClassName="wrapper-class"
+            editorClassName="editor-class"
+            toolbarClassName="toolbar-class"
+          />
+        </div>
+          <div styleName="style.itinerary">
             <AddNewRouteForm/>
             <List
             dataSource={data}
