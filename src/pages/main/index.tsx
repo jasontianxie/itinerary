@@ -7,7 +7,10 @@ import ListItem from '../../components/listItem';
 import axios from 'axios';
 import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Avatar, Icon } from 'antd';
 import { connect } from 'react-redux';
-import { getSearchData } from '../../../redux/actions/mainPageState.js'
+import { getSearchData } from '../../../redux/actions/mainPageState.js';
+import Cover from '../../components/fullPageCover';
+import Login from '../../components/login';
+
 
 let a = style;
 const TabPane = Tabs.TabPane;
@@ -111,6 +114,9 @@ class DecorateMain extends React.Component<any, any> {
   onSelect(value: any) {
     console.log('onSelect', value);
   }
+  login(){
+    Cover.open(<Login/>);
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { searchResult } = this.props;
@@ -118,6 +124,9 @@ class DecorateMain extends React.Component<any, any> {
     return (
       <div styleName="style.wrap">
         <div styleName="style.header">
+          <div styleName="style.headerTop">
+            <Button onClick={()=>this.login()}>登陆</Button>
+          </div>
           <CarouselCustom slideData={this.state.carouselData} />
           <div styleName="style.tabWrap">
             <Tabs type="card">
