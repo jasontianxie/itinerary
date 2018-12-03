@@ -48,6 +48,12 @@ class AddNewRouteForm extends React.Component<any, any>{
             if (!err) {
                   console.log({...this.state,...{ startSpot: values.startSpot, endSpot: values.endSpot }});
                 this.setState({ startSpot: values.startSpot, endSpot: values.endSpot })
+                axios.post(config.mainDomain + '/mainPageSpotsData.json',this.state).then((response) => {
+                    alert('success');
+                  })
+                    .catch(function (error) {
+                      console.log(error);
+                    });
             }
         });
     }
