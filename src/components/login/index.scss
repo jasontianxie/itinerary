@@ -1,0 +1,11 @@
+.login-form{
+    padding:10px;
+    border-radius: 5px;
+    background: white;
+    :global(.login-form-forgot){
+        float: right;
+    }
+    :global(.login-form-button){
+        width:100%;
+    }
+}

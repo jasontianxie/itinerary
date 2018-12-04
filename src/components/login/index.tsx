@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import './index.scss';
 
 const FormItem = Form.Item;
 
@@ -16,7 +17,7 @@ class NormalLoginForm extends React.Component<any, any> {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+      <Form onSubmit={this.handleSubmit} styleName="login-form">
         <FormItem>
           {getFieldDecorator('userName', {
             rules: [{ required: true, message: 'Please input your username!' }],

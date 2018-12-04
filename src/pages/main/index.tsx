@@ -5,7 +5,7 @@ import { CarouselCustom } from '../../components/carousel';
 import { config } from '../../common/ajaxConfig.js';
 import ListItem from '../../components/listItem';
 import axios from 'axios';
-import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Avatar, Icon } from 'antd';
+import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Avatar, Icon ,Dropdown, Menu} from 'antd';
 import { connect } from 'react-redux';
 import { getSearchData } from '../../../redux/actions/mainPageState.js';
 import Cover from '../../components/fullPageCover';
@@ -51,6 +51,19 @@ for (let i = 0; i < 23; i++) {
   });
 }
 
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="#">1st menu item</a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="#">2nd menu item</a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="#">3rd menu item</a>
+    </Menu.Item>
+  </Menu>
+);
 // const IconText = ({ type, text }:any) => (
 //   <span>
 //     <Icon type={type} style={{ marginRight: 8 }} />
@@ -63,7 +76,8 @@ class DecorateMain extends React.Component<any, any> {
     super(props);
     this.state = {
       carouselData: [1, 2, 3, 4, 5],
-      dataSource: []
+      dataSource: [],
+      logged:false
     }
     this.datePickerOnChange = this.datePickerOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -120,12 +134,18 @@ class DecorateMain extends React.Component<any, any> {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { searchResult } = this.props;
+    const {logged} = this.state;
 
     return (
       <div styleName="style.wrap">
         <div styleName="style.header">
           <div styleName="style.headerTop">
-            <Button onClick={()=>this.login()}>登陆</Button>
+           <div styleName="style.login">
+           {logged?(<Dropdown overlay={menu}>
+                      <span>用户中心</span>
+                    </Dropdown>):
+                    <div onClick={()=>this.login()}>登陆</div>}
+           </div>
           </div>
           <CarouselCustom slideData={this.state.carouselData} />
           <div styleName="style.tabWrap">
