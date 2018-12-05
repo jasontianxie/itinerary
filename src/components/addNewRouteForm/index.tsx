@@ -4,6 +4,7 @@ import { Form, Input, InputNumber, DatePicker, Button, Col, Select, AutoComplete
 import { LazyOptions } from '../../components/cascader';
 import axios from 'axios';
 import { config } from '../../common/ajaxConfig.js';
+import Cookies from 'js-cookie';
 
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
@@ -15,6 +16,8 @@ class AddNewRouteForm extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
+            user:Cookies.get('name'),
+            password:Cookies.get('pass'),
             startSelect: [],
             endSelect: [],
             startSpot: '',

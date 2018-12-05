@@ -3,6 +3,7 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import './index.scss';
 import axios from 'axios';
 import { config } from '../../common/ajaxConfig.js';
+import Cookies from 'js-cookie';
 
 const FormItem = Form.Item;
 
@@ -12,12 +13,14 @@ class NormalLoginForm extends React.Component<any, any> {
     this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        axios.post(config.mainDomain + '/login.json',values).then((response) => {
-          console.log(response.data);
-        })
-          .catch(function (error) {
-            console.log(error);
-          });
+        // axios.post(config.mainDomain + '/login.json',values).then((response) => {
+        //   console.log(response.data);
+        // })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        Cookies.set('name',values.userName);
+        Cookies.set('pass',values.password);
       }
     });
   }

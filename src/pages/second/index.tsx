@@ -15,6 +15,12 @@ const data = [
 
 let a = style; 
 class Second extends React.Component<any,any> {
+    constructor(props:any){
+      super(props);
+      this.state = {
+        itineraryId:null//游记的id，如果是新增的游记，那么为null，如果是编辑已经存在的游记，则有值
+      }
+    }
     componentWillMount(){
       document.title = '新增游记'
     } 

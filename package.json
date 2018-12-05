@@ -66,6 +66,7 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "@types/js-cookie": "^2.2.0",
     "@types/react": "^16.4.12",
     "@types/react-css-modules": "^4.6.2",
     "@types/react-dom": "^16.0.7",
@@ -74,6 +75,7 @@
     "antd": "^3.9.3",
     "axios": "^0.18.0",
     "babel-plugin-react-css-modules": "^3.4.2",
+    "js-cookie": "^2.2.0",
     "react-draft-wysiwyg": "^1.12.13",
     "react-loadable": "^5.5.0",
     "react-router-dom": "^4.3.1",
