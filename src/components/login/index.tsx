@@ -13,14 +13,18 @@ class NormalLoginForm extends React.Component<any, any> {
     this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        // axios.post(config.mainDomain + '/login.json',values).then((response) => {
-        //   console.log(response.data);
-        // })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
-        Cookies.set('name',values.userName);
-        Cookies.set('pass',values.password);
+        axios.post(config.mainDomain + '/login.json',values).then((response) => {
+          console.log(response.data);
+          if(response.data.length > 0){
+            Cookies.set('username',response.data[0].name);
+            Cookies.set('userpass',response.data[0].pass);
+            Cookies.set('userid',response.data[0].id);
+          }
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+        
       }
     });
   }

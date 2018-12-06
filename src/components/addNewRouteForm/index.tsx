@@ -16,12 +16,16 @@ class AddNewRouteForm extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
-            user:Cookies.get('name'),
-            password:Cookies.get('pass'),
+            user:Cookies.get('username'),
+            password:Cookies.get('userpass'),
+            userid:Cookies.get('userid'),
+            itineraryid:1,
             startSelect: [],
             endSelect: [],
             startSpot: '',
+            startSpotId:'',
             endSpot: '',
+            endSpotId:'',
             startTime: '',
             endTime: '',
             timeSpent: '',
@@ -51,7 +55,7 @@ class AddNewRouteForm extends React.Component<any, any>{
             if (!err) {
                   console.log({...this.state,...{ startSpot: values.startSpot, endSpot: values.endSpot }});
                 this.setState({ startSpot: values.startSpot, endSpot: values.endSpot })
-                axios.post(config.mainDomain + '/mainPageSpotsData.json',this.state).then((response) => {
+                axios.post(config.mainDomain + '/addNewRouteForm.json',this.state).then((response) => {
                     alert('success');
                   })
                     .catch(function (error) {
@@ -152,7 +156,7 @@ class AddNewRouteForm extends React.Component<any, any>{
                             }],
                         })(
                             <AutoComplete
-                                dataSource={dataSource1}
+                                dataSource={dataSource1.map((item:any)=>item.fullname)}
                                 style={{ width: '100%' }}
                                 onSelect={this.onSelect}
                                 onSearch={(value)=>this.handleSearch(1,value)}
@@ -176,7 +180,7 @@ class AddNewRouteForm extends React.Component<any, any>{
                             }],
                         })(
                             <AutoComplete
-                                dataSource={dataSource2}
+                                dataSource={dataSource2.map((item:any)=>item.fullname)}
                                 style={{ width: '100%' }}
                                 onSelect={this.onSelect}
                                 onSearch={(value)=>this.handleSearch(2,value)}
