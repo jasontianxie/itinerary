@@ -3,7 +3,7 @@ import './index.scss';
 
 console.log("sfsfsdf");
 class ItineraryEditor extends React.Component<any,any> {
-    private render(){
-        return <div className="foo" />
+    public render() {
+        return <div className="foo" />;
     }
 }

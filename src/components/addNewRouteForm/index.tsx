@@ -10,23 +10,23 @@ const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
 const { TextArea } = Input;
-let timerHandler:any =null;
+let timerHandler: any = null;
 const AOption = AutoComplete.Option;
 
 class AddNewRouteForm extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
-            user:Cookies.get('username'),
-            password:Cookies.get('userpass'),
-            userid:Cookies.get('userid'),
-            itineraryid:1,
+            user: Cookies.get('username'),
+            passord: Cookies.get('userpass'),
+            userid: Cookies.get('userid'),
+            itineraryid: 1,
             startSelect: [],
             endSelect: [],
             startSpot: '',
-            startSpotId:'',
+            startSpotId: '',
             endSpot: '',
-            endSpotId:'',
+            endSpotId: '',
             startTime: '',
             endTime: '',
             timeSpent: '',
@@ -54,13 +54,13 @@ class AddNewRouteForm extends React.Component<any, any>{
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err: any, values: any) => {
             if (!err) {
-                  console.log({...this.state,...{ startSpot: values.startSpot, endSpot: values.endSpot }});
+                console.log({ ...this.state, ...{ startSpot: values.startSpot, endSpot: values.endSpot } });
                 this.setState({ startSpot: values.startSpot, endSpot: values.endSpot })
-                axios.post(config.mainDomain + '/addNewRouteForm.json',this.state).then((response) => {
+                axios.post(config.mainDomain + '/addNewRouteForm.json', this.state).then((response) => {
                     alert('success');
-                  })
+                })
                     .catch(function (error) {
-                      console.log(error);
+                        console.log(error);
                     });
             }
         });
@@ -85,39 +85,39 @@ class AddNewRouteForm extends React.Component<any, any>{
             this.setState({ endSelect: state })
         }
     }
-    getVehicle(value:any){
+    getVehicle(value: any) {
         this.setState({ vehicle: value })
     }
-    getComments(e:any){
+    getComments(e: any) {
         this.setState({ comments: e.target.value })
     }
-    handleSearch = (index:number,value: any) => {
-  
-        if(timerHandler) {
-          window.clearTimeout(timerHandler);
+    handleSearch = (index: number, value: any) => {
+
+        if (timerHandler) {
+            window.clearTimeout(timerHandler);
         }
-        if(value === ''){
-            this.setState({ ['dataSource'+index]: []});
-          return;
+        if (value === '') {
+            this.setState({ ['dataSource' + index]: [] });
+            return;
         }
-        timerHandler = window.setTimeout(()=>{
-          axios.post(config.mainDomain + '/mainPageSpotsData.json',{value:this.state[index === 1?'startSelect':'endSelect'].concat(value)}).then((response) => {
-            this.setState({ ['dataSource'+index]: response.data })
-          })
-            .catch(function (error) {
-              console.log(error);
-            });
-        },1000);//search delay for 1 second
-      }
-      onSelect(index:number,value: any) {
-        console.log('onSelect id is:', index === 1?'startSpot':'endSpot',value);
-          this.setState({ [index === 1 ? 'startSpotId' : 'endSpotId']: value })
-      }
+        timerHandler = window.setTimeout(() => {
+            axios.post(config.mainDomain + '/mainPageSpotsData.json', { value: this.state[index === 1 ? 'startSelect' : 'endSelect'].concat(value) }).then((response) => {
+                this.setState({ ['dataSource' + index]: response.data })
+            })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }, 1000);//search delay for 1 second
+    }
+    onSelect(index: number, value: any) {
+        console.log('onSelect id is:', index === 1 ? 'startSpot' : 'endSpot', value);
+        this.setState({ [index === 1 ? 'startSpotId' : 'endSpotId']: value })
+    }
     render() {
         const { getFieldDecorator } = this.props.form;
         const { dataSource1, dataSource2 } = this.state;
-        const children1 = dataSource1.map((item:any) => <AOption key={item.id} data-spot-id = {item.id}>{item.fullname}</AOption>);
-        const children2 = dataSource2.map((item:any) => <AOption key={item.id} data-spot-id = {item.id}>{item.fullname}</AOption>);
+        const children1 = dataSource1.map((item: any) => <AOption key={item.id} data-spot-id={item.id}>{item.fullname}</AOption>);
+        const children2 = dataSource2.map((item: any) => <AOption key={item.id} data-spot-id={item.id}>{item.fullname}</AOption>);
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -162,12 +162,12 @@ class AddNewRouteForm extends React.Component<any, any>{
                             <AutoComplete
                                 // dataSource={dataSource1.map((item:any)=>item.fullname)}
                                 style={{ width: '100%' }}
-                                onSelect={(value)=>this.onSelect(1,value)}
-                                onSearch={(value)=>this.handleSearch(1,value)}
+                                onSelect={(value) => this.onSelect(1, value)}
+                                onSearch={(value) => this.handleSearch(1, value)}
                                 placeholder="开始地点名称"
                                 open
                             >
-                            {children1}
+                                {children1}
                             </AutoComplete>
                         )}
                     </FormItem>
@@ -189,11 +189,11 @@ class AddNewRouteForm extends React.Component<any, any>{
                             <AutoComplete
                                 // dataSource={dataSource2.map((item:any)=>item.fullname)}
                                 style={{ width: '100%' }}
-                                onSelect={(value)=>this.onSelect(2,value)}
-                                onSearch={(value)=>this.handleSearch(2,value)}
+                                onSelect={(value) => this.onSelect(2, value)}
+                                onSearch={(value) => this.handleSearch(2, value)}
                                 placeholder="开始地点名称"
                             >
-                            {children2}
+                                {children2}
                             </AutoComplete>
                         )}
                     </FormItem>
