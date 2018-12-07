@@ -1,7 +1,12 @@
 {
-    "extends": ["tslint:latest", "tslint-react"],
+    "extends": ["tslint:latest"],
     "rules": {
       // override tslint-react rules here
-      "jsx-wrap-multiline": false
-    }
+      "jsx-wrap-multiline": false,
+      "indent": {"options":["spaces", 4]},
+      "no-var-requires": true,
+      // "no-console":{"severity": "error"},
+      "trailing-comma": [true, {"multiline": "always", "singleline": "never"}]
+    },
+    "defaultSeverity":"warning"
   }

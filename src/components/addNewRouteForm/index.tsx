@@ -11,6 +11,7 @@ const { RangePicker } = DatePicker;
 const Option = Select.Option;
 const { TextArea } = Input;
 let timerHandler:any =null;
+const AOption = AutoComplete.Option;
 
 class AddNewRouteForm extends React.Component<any, any>{
     constructor(props: any) {
@@ -108,12 +109,15 @@ class AddNewRouteForm extends React.Component<any, any>{
             });
         },1000);//search delay for 1 second
       }
-      onSelect(value: any) {
-        console.log('onSelect', value);
+      onSelect(index:number,value: any) {
+        console.log('onSelect id is:', index === 1?'startSpot':'endSpot',value);
+          this.setState({ [index === 1 ? 'startSpotId' : 'endSpotId']: value })
       }
     render() {
         const { getFieldDecorator } = this.props.form;
         const { dataSource1, dataSource2 } = this.state;
+        const children1 = dataSource1.map((item:any) => <AOption key={item.id} data-spot-id = {item.id}>{item.fullname}</AOption>);
+        const children2 = dataSource2.map((item:any) => <AOption key={item.id} data-spot-id = {item.id}>{item.fullname}</AOption>);
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -156,12 +160,15 @@ class AddNewRouteForm extends React.Component<any, any>{
                             }],
                         })(
                             <AutoComplete
-                                dataSource={dataSource1.map((item:any)=>item.fullname)}
+                                // dataSource={dataSource1.map((item:any)=>item.fullname)}
                                 style={{ width: '100%' }}
-                                onSelect={this.onSelect}
+                                onSelect={(value)=>this.onSelect(1,value)}
                                 onSearch={(value)=>this.handleSearch(1,value)}
                                 placeholder="开始地点名称"
-                            />
+                                open
+                            >
+                            {children1}
+                            </AutoComplete>
                         )}
                     </FormItem>
                     <FormItem
@@ -180,12 +187,14 @@ class AddNewRouteForm extends React.Component<any, any>{
                             }],
                         })(
                             <AutoComplete
-                                dataSource={dataSource2.map((item:any)=>item.fullname)}
+                                // dataSource={dataSource2.map((item:any)=>item.fullname)}
                                 style={{ width: '100%' }}
-                                onSelect={this.onSelect}
+                                onSelect={(value)=>this.onSelect(2,value)}
                                 onSearch={(value)=>this.handleSearch(2,value)}
                                 placeholder="开始地点名称"
-                            />
+                            >
+                            {children2}
+                            </AutoComplete>
                         )}
                     </FormItem>
                     <FormItem
