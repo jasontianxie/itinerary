@@ -17,6 +17,7 @@ class AddNewRouteForm extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
+            country:"中国",
             user: Cookies.get('username'),
             passord: Cookies.get('userpass'),
             userid: Cookies.get('userid'),
@@ -102,7 +103,7 @@ class AddNewRouteForm extends React.Component<any, any>{
         }
         timerHandler = window.setTimeout(() => {
             axios.post(config.mainDomain + '/mainPageSpotsData.json', { value: this.state[index === 1 ? 'startSelect' : 'endSelect'].concat(value) }).then((response) => {
-                this.setState({ ['dataSource' + index]: response.data })
+                this.setState({ ['dataSource' + index]: response.data ,[index === 1?'startSpotId':'endSpotId']:''})
             })
                 .catch(function (error) {
                     console.log(error);
@@ -165,7 +166,6 @@ class AddNewRouteForm extends React.Component<any, any>{
                                 onSelect={(value) => this.onSelect(1, value)}
                                 onSearch={(value) => this.handleSearch(1, value)}
                                 placeholder="开始地点名称"
-                                open
                             >
                                 {children1}
                             </AutoComplete>
