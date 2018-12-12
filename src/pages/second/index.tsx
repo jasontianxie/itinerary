@@ -1,9 +1,10 @@
-import * as React from 'react';
-import style from './index.scss';
-import { List } from 'antd';
-import AddNewRouteForm from '../../components/addNewRouteForm';
-import { Editor } from 'react-draft-wysiwyg';
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import * as React from "react";
+import style from "./index.scss";
+import { List } from "antd";
+import AddNewRouteForm from "../../components/addNewRouteForm";
+// import { Editor } from 'react-draft-wysiwyg';
+import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import ItineraryEditor from "../../components/itineraryEditor/index";
 
 const data = [
   {startSpot:'chonging',endSpot:'chengdu',startTime:'2018-11-01 12:00:00',endTime:'2018-11-01 13:00:00',spentTime:'0d1h0m0s',waitTime:'1h',vehicle:'高铁',cost:'100RMB',comments:''},
@@ -28,11 +29,12 @@ class Second extends React.Component<any,any> {
       return (
       <div className="wrap">
         <div styleName="style.detailRecord">
-          <Editor
+          {/* <Editor
             wrapperClassName="wrapper-class"
             editorClassName="editor-class"
             toolbarClassName="toolbar-class"
-          />
+          /> */}
+          <ItineraryEditor/>
         </div>
           <div styleName="style.itinerary">
             <AddNewRouteForm/>

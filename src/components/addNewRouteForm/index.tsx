@@ -56,11 +56,11 @@ class AddNewRouteForm extends React.Component<any, any>{
         this.props.form.validateFieldsAndScroll((err: any, values: any) => {
             if (!err) {
                 console.log({ ...this.state, ...{ startSpot: values.startSpot, endSpot: values.endSpot } });
-                this.setState({ startSpot: values.startSpot, endSpot: values.endSpot })
-                axios.post(config.mainDomain + '/addNewRouteForm.json', this.state).then((response) => {
-                    alert('success');
+                this.setState({ startSpot: values.startSpot, endSpot: values.endSpot });
+                axios.post(config.mainDomain + "/addNewRouteForm.json", this.state).then((response) => {
+                    alert("success");
                 })
-                    .catch(function (error) {
+                    .catch((error) => {
                         console.log(error);
                     });
             }

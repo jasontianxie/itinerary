@@ -1,9 +1,13 @@
-import * as React from 'react';
-import './index.scss';
+import * as React from "react";
+import "./index.scss";
 
-console.log("sfsfsdf");
-class ItineraryEditor extends React.Component<any,any> {
+
+export default class ItineraryEditor extends React.Component<any, any> {
     public render() {
-        return <div className="foo" />;
+        return (
+        <div styleName="edit-wrap">
+            <div contentEditable={true} styleName = "edit"></div>
+        </div>
+        );
     }
 }
