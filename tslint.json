@@ -6,7 +6,9 @@
       "indent": {"options":["spaces", 4]},
       "no-var-requires": true,
       // "no-console":{"severity": "error"},
-      "trailing-comma": [true, {"multiline": "always", "singleline": "never"}]
+      "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+      "no-implicit-dependencies": [true, "dev"],
+      "max-line-length": [true, 160]
     },
     "defaultSeverity":"warning"
   }

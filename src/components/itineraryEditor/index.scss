@@ -1,10 +1,15 @@
+$black: #000;
+$white-opacity: rgba(255, 255, 255, .1);
+
 .edit-wrap {
+  color: $black;
+  font-size: 14px;
   height: 100%;
   width: 100%;
 }
 
 .edit {
-  background: rgba(255, 255, 255, .1);
+  background: $white-opacity;
   height: 500px;
   width: 500px;
 }
