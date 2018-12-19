@@ -11,19 +11,19 @@ const options = [{
   isLeaf: false,
 }];
 
-export class LazyOptions extends React.Component<any,any> {
-    constructor(props:any){
-        super(props);
-        this.state = {options}
-        this.onChange = this.onChange.bind(this);
-    }
-
-  onChange = (value:any, selectedOptions:any) => {
-    // console.log(value, selectedOptions);
-    this.props.getlazyloadCascader(this.props.index,value);
+export class LazyOptions extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = { options }
+    this.onChange = this.onChange.bind(this);
   }
 
-  loadData = (selectedOptions:any) => {
+  onChange = (value: any, selectedOptions: any) => {
+    // console.log(value, selectedOptions);
+    this.props.getlazyloadCascader(this.props.index, value);
+  }
+
+  loadData = (selectedOptions: any) => {
     const targetOption = selectedOptions[selectedOptions.length - 1];
     targetOption.loading = true;
 
@@ -31,11 +31,11 @@ export class LazyOptions extends React.Component<any,any> {
     setTimeout(() => {
       targetOption.loading = false;
       targetOption.children = [{
-        label: targetOption.label == '重庆'?'永川区':'西安市',
-        value: targetOption.label == '重庆'?'永川区':'西安市'
+        label: targetOption.label == '重庆' ? '永川区' : '西安市',
+        value: targetOption.label == '重庆' ? '永川区' : '西安市'
       }, {
-        label: targetOption.label == '重庆'?'大足区':'咸阳市',
-        value: targetOption.label == '重庆'?'大足区':'咸阳市',
+        label: targetOption.label == '重庆' ? '大足区' : '咸阳市',
+        value: targetOption.label == '重庆' ? '大足区' : '咸阳市',
       }];
       this.setState({
         options: [...this.state.options],

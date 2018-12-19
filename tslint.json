@@ -8,7 +8,9 @@
       // "no-console":{"severity": "error"},
       "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
       "no-implicit-dependencies": [true, "dev"],
-      "max-line-length": [true, 160]
+      "max-line-length": [true, 160],//每行最大长度160
+      "object-literal-sort-keys": false,//对象的名字是否按字母排序
+      "ordered-imports": false//import的模块名字是否按字母排序
     },
     "defaultSeverity":"warning"
   }

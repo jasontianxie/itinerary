@@ -1,10 +1,10 @@
-import * as React from 'react';
-import './index.scss';
-import { Form, Input, InputNumber, DatePicker, Button, Col, Select, AutoComplete } from 'antd';
-import { LazyOptions } from '../../components/cascader';
-import axios from 'axios';
-import { config } from '../../common/ajaxConfig.js';
-import Cookies from 'js-cookie';
+import * as React from "react";
+import "./index.scss";
+import { Form, Input, InputNumber, DatePicker, Button, Col, Select, AutoComplete } from "antd";
+import { LazyOptions } from "../../components/cascader";
+import axios from "axios";
+import { config } from "../../common/ajaxConfig.js";
+import Cookies from "js-cookie";
 
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
@@ -17,27 +17,27 @@ class AddNewRouteForm extends React.Component<any, any>{
     constructor(props: any) {
         super(props);
         this.state = {
-            country:"中国",
-            user: Cookies.get('username'),
-            passord: Cookies.get('userpass'),
-            userid: Cookies.get('userid'),
-            itineraryid: 1,
-            startSelect: [],
-            endSelect: [],
-            startSpot: '',
-            startSpotId: '',
-            endSpot: '',
-            endSpotId: '',
-            startTime: '',
-            endTime: '',
-            timeSpent: '',
-            waitTimeHours: 0,
-            waitTimeMinutes: 0,
-            vehicle: 'flight',
+            comments: "",
             cost: 0,
-            comments: '',
+            country: "中国",
             dataSource1: [],
             dataSource2: [],
+            endSelect: [],
+            endSpot: "",
+            endSpotId: "",
+            endTime: "",
+            itineraryid: 1,
+            passord: Cookies.get("userpass"),
+            startSelect: [],
+            startSpot: "",
+            startSpotId: "",
+            startTime: "",
+            timeSpent: "",
+            user: Cookies.get("username"),
+            userid: Cookies.get("userid"),
+            vehicle: "flight",
+            waitTimeHours: 0,
+            waitTimeMinutes: 0,
         }
         this.datePickerOnChange = this.datePickerOnChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,7 +50,7 @@ class AddNewRouteForm extends React.Component<any, any>{
         this.handleSearch = this.handleSearch.bind(this);
         this.onSelect = this.onSelect.bind(this);
     }
-    handleSubmit(e: any) {
+    public handleSubmit(e: any) {
         // e.persist();
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err: any, values: any) => {
@@ -66,78 +66,82 @@ class AddNewRouteForm extends React.Component<any, any>{
             }
         });
     }
-    datePickerOnChange(date: any, dateString: any) {
+    public datePickerOnChange(date: any, dateString: any) {
         // console.log(date, dateString);
         this.setState({ startTime: dateString[0], endTime: dateString[1] })
     }
-    setWaitTimeHours(value: any) {
-        this.setState({ waitTimeHours: value })
+    public setWaitTimeHours(value: any) {
+        this.setState({ waitTimeHours: value });
     }
-    setWaitTimeMinutes(value: any) {
-        this.setState({ waitTimeMinutes: value })
+    public setWaitTimeMinutes(value: any) {
+        this.setState({ waitTimeMinutes: value });
     }
-    setCost(value: any) {
-        this.setState({ cost: value })
+    public setCost(value: any) {
+        this.setState({ cost: value });
     }
-    getlazyloadCascader(startSelect: number, state: any) {
+    public getlazyloadCascader(startSelect: number, state: any) {
         if (startSelect === 1) {
-            this.setState({ startSelect: state })
+            this.setState({ startSelect: state });
         } else {
-            this.setState({ endSelect: state })
+            this.setState({ endSelect: state });
         }
     }
-    getVehicle(value: any) {
-        this.setState({ vehicle: value })
+    public getVehicle(value: any) {
+        this.setState({ vehicle: value });
     }
-    getComments(e: any) {
-        this.setState({ comments: e.target.value })
+    public getComments(e: any) {
+        this.setState({ comments: e.target.value });
     }
-    handleSearch = (index: number, value: any) => {
+    public handleSearch = (index: number, value: any) => {
 
         if (timerHandler) {
             window.clearTimeout(timerHandler);
         }
-        if (value === '') {
-            this.setState({ ['dataSource' + index]: [] });
+        if (value === "") {
+            this.setState({ ["dataSource" + index]: [] });
             return;
         }
         timerHandler = window.setTimeout(() => {
-            axios.post(config.mainDomain + '/mainPageSpotsData.json', { value: this.state[index === 1 ? 'startSelect' : 'endSelect'].concat(value) }).then((response) => {
-                this.setState({ ['dataSource' + index]: response.data ,[index === 1?'startSpotId':'endSpotId']:''})
+            axios.post(config.mainDomain + "/mainPageSpotsData.json", { value: this.state[index === 1 ? "startSelect" : "endSelect"].concat(value) })
+            .then((response) => {
+                this.setState({ ["dataSource" + index]: response.data, [index === 1 ? "startSpotId" : "endSpotId"]: "" });
             })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
                 });
-        }, 1000);//search delay for 1 second
+        }, 1000); // search delay for 1 second
     }
-    onSelect(index: number, value: any) {
-        console.log('onSelect id is:', index === 1 ? 'startSpot' : 'endSpot', value);
-        this.setState({ [index === 1 ? 'startSpotId' : 'endSpotId']: value })
+    public onSelect(index: number, value: any) {
+        console.log("onSelect id is:", index === 1 ? "startSpot" : "endSpot", value);
+        this.setState({ [index === 1 ? "startSpotId" : "endSpotId"]: value });
     }
-    render() {
+    public spotNameChange(index: number, value: any) {
+        this.setState({ [index === 1 ? "startSpot" : "endSpot"]: value });
+    }
+    public render() {
         const { getFieldDecorator } = this.props.form;
         const { dataSource1, dataSource2 } = this.state;
         const children1 = dataSource1.map((item: any) => <AOption key={item.id} data-spot-id={item.id}>{item.fullname}</AOption>);
         const children2 = dataSource2.map((item: any) => <AOption key={item.id} data-spot-id={item.id}>{item.fullname}</AOption>);
         const formItemLayout = {
             labelCol: {
-                xs: { span: 24 },
                 sm: { span: 6 },
+                xs: { span: 24 },
             },
             wrapperCol: {
-                xs: { span: 24 },
                 sm: { span: 18 },
+                xs: { span: 24 },
             },
         };
         const tailFormItemLayout = {
             wrapperCol: {
-                xs: {
-                    span: 24,
-                    offset: 0,
-                },
                 sm: {
-                    span: 18,
                     offset: 6,
+                    span: 18,
+                },
+                xs: {
+                    offset: 0,
+                    span: 24,
                 },
             },
         };
@@ -155,20 +159,21 @@ class AddNewRouteForm extends React.Component<any, any>{
                         label="出发地具体名称"
                         {...formItemLayout}
                     >
-                        {getFieldDecorator('startSpot', {
+                        {getFieldDecorator("startSpot", {
                             rules: [{
-                                required: true, message: '输入出发地!',
+                                message: "输入出发地!", required: true,
                             }],
                         })(
                             <AutoComplete
                                 // dataSource={dataSource1.map((item:any)=>item.fullname)}
-                                style={{ width: '100%' }}
+                                style={{ width: "100%" }}
                                 onSelect={(value) => this.onSelect(1, value)}
                                 onSearch={(value) => this.handleSearch(1, value)}
+                                onChange={(value) => this.spotNameChange(1, value)}
                                 placeholder="开始地点名称"
                             >
                                 {children1}
-                            </AutoComplete>
+                            </AutoComplete>,
                         )}
                     </FormItem>
                     <FormItem
@@ -181,32 +186,33 @@ class AddNewRouteForm extends React.Component<any, any>{
                         label="目的地具体名称"
                         {...formItemLayout}
                     >
-                        {getFieldDecorator('endSpot', {
+                        {getFieldDecorator("endSpot", {
                             rules: [{
-                                required: true, message: '输入目的地!',
+                                message: "输入目的地!", required: true,
                             }],
                         })(
                             <AutoComplete
                                 // dataSource={dataSource2.map((item:any)=>item.fullname)}
-                                style={{ width: '100%' }}
+                                style={{ width: "100%" }}
                                 onSelect={(value) => this.onSelect(2, value)}
                                 onSearch={(value) => this.handleSearch(2, value)}
+                                onChange={(value) => this.spotNameChange(2, value)}
                                 placeholder="开始地点名称"
                             >
                                 {children2}
-                            </AutoComplete>
+                            </AutoComplete>,
                         )}
                     </FormItem>
                     <FormItem
                         label="行程时间"
                         {...formItemLayout}
                     >
-                        {getFieldDecorator('startEndDateTime', {
+                        {getFieldDecorator("startEndDateTime", {
                             rules: [{
-                                required: true, message: '请输入起止时间!',
+                                message: "请输入起止时间!", required: true,
                             }],
                         })(
-                            <RangePicker onChange={this.datePickerOnChange} showTime={true} format="YYYY-MM-DD HH:mm:ss" placeholder={['开始时间', '结束时间']} />
+                            <RangePicker onChange={this.datePickerOnChange} showTime={true} format="YYYY-MM-DD HH:mm:ss" placeholder={["开始时间", "结束时间"]} />,
                         )}
                     </FormItem>
                     <FormItem
@@ -281,7 +287,7 @@ class AddNewRouteForm extends React.Component<any, any>{
                     </FormItem>
                 </Form>
             </div>
-        )
+        );
     }
 }
 
