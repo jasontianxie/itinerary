@@ -13,7 +13,7 @@ class NormalLoginForm extends React.Component<any, any> {
     this.props.form.validateFields((err:any, values:any) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        axios.post(config.mainDomain + '/login.json',values).then((response) => {
+        axios.post(config.mainDomain + '/users',values).then((response) => {
           console.log(response.data);
           if(response.data.length > 0){
             Cookies.set('username',response.data[0].name);
