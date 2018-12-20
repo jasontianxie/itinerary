@@ -13,7 +13,7 @@ const { TextArea } = Input;
 let timerHandler: any = null;
 const AOption = AutoComplete.Option;
 
-class AddNewRouteForm extends React.Component<any, any>{
+class AddNewRouteForm extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {

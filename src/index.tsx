@@ -1,4 +1,4 @@
-///<reference path="./common.d.ts" />
+import "./common.d.ts";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Main from './pages/main/index';
