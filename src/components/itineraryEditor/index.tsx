@@ -1,7 +1,12 @@
 import * as React from "react";
 import "./index.scss";
 
-export default class ItineraryEditor extends React.Component<any, any> {
+// interface PropsStyle {
+//     (input: string): void
+// }
+type PropsStyle = (input: string) => void;
+
+export default class ItineraryEditor extends React.Component<PropsStyle, any> {
     private textInput: any;
     constructor(props: any) {
         super(props);
