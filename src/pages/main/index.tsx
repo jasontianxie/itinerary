@@ -88,7 +88,7 @@ class DecorateMain extends React.Component<any, any> {
     this.fetchCarouselData();
   }
   fetchCarouselData() {
-    axios.get(config.mainDomain + '/mainPageSlideData.json').then((response) => {
+    axios.get(config.mainDomain + '/mainPageSlideData').then((response) => {
       this.setState({ carouselData: response.data })
     })
       .catch(function (error) {
