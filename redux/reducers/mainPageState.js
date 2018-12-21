@@ -14,7 +14,7 @@ export const mainPageState = (state=initState,action)=>{
         } else {
             return {...state,dataSource2:action.payload}
         }
-        case 'MAIN_PAGE_GET_SEARCH_START':
+        case 'MAIN_PAGE_GET_SEARCH_FAIL':
         return state;
         default:
         return state;

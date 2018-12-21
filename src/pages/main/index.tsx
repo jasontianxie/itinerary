@@ -6,10 +6,11 @@ import { config } from "../../common/ajaxConfig.js";
 import ListItem from "../../components/listItem";
 import axios from "axios";
 import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Avatar, Icon , Dropdown, Menu} from "antd";
-import { connect } from "react-redux";
+import { Provider, connect } from "react-redux";
 import { getSearchData } from "../../../redux/actions/mainPageState.js";
 import Cover from "../../components/fullPageCover";
 import Login from "../../components/login";
+import {store} from "../../index";
 
 let a = style;
 const TabPane = Tabs.TabPane;
@@ -76,7 +77,6 @@ class DecorateMain extends React.Component<any, any> {
     this.state = {
       carouselData: [1, 2, 3, 4, 5],
       dataSource: [],
-      logged: false,
     };
     this.datePickerOnChange = this.datePickerOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -127,20 +127,24 @@ class DecorateMain extends React.Component<any, any> {
   public onSelect(value: any) {
     console.log("onSelect", value);
   }
-  public login(){
-    Cover.open(<Login/>);
+  public login() {
+    Cover.open(<Provider store={store}><Login/></Provider>);
+  }
+  public componentDidUpdate() {
+    if (!!this.props.logged.data) {
+      Cover.close();
+    }
   }
   public render() {
     const { getFieldDecorator } = this.props.form;
-    const { searchResult } = this.props;
-    const {logged} = this.state;
+    const { searchResult, logged } = this.props;
 
     return (
       <div styleName="style.wrap">
         <div styleName="style.header">
           <div styleName="style.headerTop">
            <div styleName="style.login">
-           {logged ? (<Dropdown overlay={menu}>
+           {!!logged.data ? (<Dropdown overlay={menu}>
                       <span>用户中心</span>
                     </Dropdown>) :
                     <div onClick={() => this.login()}>登陆</div>}
@@ -235,7 +239,8 @@ const mapStateToProps = (state: any) => {
   console.log(state);
   return({
   searchResult: state.mainPageState,
-})};
+  logged: state.login,
+}); };
 const mapDispatchToProps = (dispatch: any) => ({
   handleSearch: (index: number, value: string) => dispatch(getSearchData(index, value)),
 });

@@ -14,8 +14,8 @@ class FullPageCover extends React.Component<any,any>{
     open(component:any){
         this.setState({display:true,component})
       }
-    close(e:any){
-        if(e.target === this.myRef.current){
+    close(e?:any){
+        if(typeof(e) === "undefined" || e.target === this.myRef.current){
             this.setState({display:false})
         }
       }
