@@ -1,16 +1,15 @@
-import * as React from 'react';
-import style from './index.scss';
-import './index.noneModules.css';
-import { CarouselCustom } from '../../components/carousel';
-import { config } from '../../common/ajaxConfig.js';
-import ListItem from '../../components/listItem';
-import axios from 'axios';
-import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Avatar, Icon ,Dropdown, Menu} from 'antd';
-import { connect } from 'react-redux';
-import { getSearchData } from '../../../redux/actions/mainPageState.js';
-import Cover from '../../components/fullPageCover';
-import Login from '../../components/login';
-
+import * as React from "react";
+import style from "./index.scss";
+import "./index.noneModules.css";
+import { CarouselCustom } from "../../components/carousel";
+import { config } from "../../common/ajaxConfig.js";
+import ListItem from "../../components/listItem";
+import axios from "axios";
+import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Avatar, Icon , Dropdown, Menu} from "antd";
+import { connect } from "react-redux";
+import { getSearchData } from "../../../redux/actions/mainPageState.js";
+import Cover from "../../components/fullPageCover";
+import Login from "../../components/login";
 
 let a = style;
 const TabPane = Tabs.TabPane;
@@ -43,11 +42,11 @@ const tailFormItemLayout = {
 const listData: any[] = [];
 for (let i = 0; i < 23; i++) {
   listData.push({
-    href: 'http://ant.design',
+    href: "http://ant.design",
     title: `ant design part ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description: 'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content: 'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+    description: "Ant Design, a design language for background applications, is refined by Ant UED Team.",
+    content: "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
   });
 }
 
@@ -77,61 +76,61 @@ class DecorateMain extends React.Component<any, any> {
     this.state = {
       carouselData: [1, 2, 3, 4, 5],
       dataSource: [],
-      logged:false
-    }
+      logged: false,
+    };
     this.datePickerOnChange = this.datePickerOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.onSelect = this.onSelect.bind(this);
   }
-  componentWillMount() {
+  public componentWillMount() {
     this.fetchCarouselData();
   }
-  fetchCarouselData() {
-    axios.get(config.mainDomain + '/mainPageSlideData').then((response) => {
+  public fetchCarouselData() {
+    axios.get(config.mainDomain + "/mainPageSlideData").then((response) => {
       this.setState({ carouselData: response.data })
     })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   }
-  datePickerOnChange(date: any, dateString: any) {
+  public datePickerOnChange(date: any, dateString: any) {
     console.log(date, dateString);
   }
-  handleSubmit = (e: any) => {
+  public handleSubmit = (e: any) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err: any, values: any) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log("Received values of form: ", values);
       }
     });
   }
-  handleSearch = (index: number, value: any) => {
+  public handleSearch = (index: number, value: any) => {
 
     if (timerHandler) {
       window.clearTimeout(timerHandler);
     }
-    if (value === '') {
+    if (value === "") {
       // this.setState({ dataSource: []});
       return;
     }
     timerHandler = window.setTimeout(() => {
-      // axios.get(config.mainDomain + '/mainPageSpotsData.json?search='+value).then((response) => {
+      // axios.get(config.mainDomain + "/mainPageSpotsData.json?search="+value).then((response) => {
       //   this.setState({ dataSource: response.data })
       // })
       //   .catch(function (error) {
       //     console.log(error);
       //   });
       this.props.handleSearch(index, value);
-    }, 1000);//search delay for 1 second
+    }, 1000); // search delay for 1 second
   }
-  onSelect(value: any) {
-    console.log('onSelect', value);
+  public onSelect(value: any) {
+    console.log("onSelect", value);
   }
-  login(){
+  public login(){
     Cover.open(<Login/>);
   }
-  render() {
+  public render() {
     const { getFieldDecorator } = this.props.form;
     const { searchResult } = this.props;
     const {logged} = this.state;
@@ -141,10 +140,10 @@ class DecorateMain extends React.Component<any, any> {
         <div styleName="style.header">
           <div styleName="style.headerTop">
            <div styleName="style.login">
-           {logged?(<Dropdown overlay={menu}>
+           {logged ? (<Dropdown overlay={menu}>
                       <span>用户中心</span>
-                    </Dropdown>):
-                    <div onClick={()=>this.login()}>登陆</div>}
+                    </Dropdown>) :
+                    <div onClick={() => this.login()}>登陆</div>}
            </div>
           </div>
           <CarouselCustom slideData={this.state.carouselData} />
@@ -153,25 +152,25 @@ class DecorateMain extends React.Component<any, any> {
               <TabPane tab="看别人" key="2">
                 <Search
                   placeholder="输入想去的目的地"
-                  onSearch={value => console.log(value)}
+                  onSearch={(value) => console.log(value)}
                   enterButton
                 />
               </TabPane>
               <TabPane tab="自己去" key="1">
                 <Form onSubmit={this.handleSubmit}>
                   <FormItem label="输入起止时间：" {...formItemLayout}>
-                    {getFieldDecorator('startEndDateTime', {
+                    {getFieldDecorator("startEndDateTime", {
                       rules: [{
-                        required: true, message: '请输入起止时间!',
+                        required: true, message: "请输入起止时间!",
                       }],
                     })(
-                      <RangePicker onChange={this.datePickerOnChange} showTime={true} format="YYYY-MM-DD HH:mm:ss" placeholder={['开始时间', '结束时间']} />
+                      <RangePicker onChange={this.datePickerOnChange} showTime={true} format="YYYY-MM-DD HH:mm:ss" placeholder={["开始时间", "结束时间"]} />
                     )}
                   </FormItem>
                   <FormItem {...formItemLayout} label="输入出发点名称：">
-                    {getFieldDecorator('startSpot', {
+                    {getFieldDecorator("startSpot", {
                       rules: [{
-                        required: true, message: '请输入出发点名称!',
+                        required: true, message: "请输入出发点名称!",
                       }],
                     })(
                       <AutoComplete
@@ -180,13 +179,13 @@ class DecorateMain extends React.Component<any, any> {
                         onSelect={this.onSelect}
                         onSearch={(value) => this.handleSearch(1, value)}
                         placeholder="开始地点名称"
-                      />
+                      />,
                     )}
                   </FormItem>
                   <FormItem {...formItemLayout} label="输入到达点名称：">
-                    {getFieldDecorator('endSpot', {
+                    {getFieldDecorator("endSpot", {
                       rules: [{
-                        required: true, message: '请输入到达点名称!',
+                        required: true, message: "请输入到达点名称!",
                       }],
                     })(
                       <AutoComplete
@@ -195,7 +194,7 @@ class DecorateMain extends React.Component<any, any> {
                         onSelect={this.onSelect}
                         onSearch={(value) => this.handleSearch(2, value)}
                         placeholder="结束地点名称"
-                      />
+                      />,
                     )}
                   </FormItem>
                   <FormItem {...tailFormItemLayout}>
@@ -232,15 +231,15 @@ class DecorateMain extends React.Component<any, any> {
   }
 }
 const Main = Form.create()(DecorateMain);
-const mapStateToProps=(state: any)=>{
+const mapStateToProps = (state: any) => {
   console.log(state);
   return({
-  searchResult: state.mainPageState
+  searchResult: state.mainPageState,
 })};
 const mapDispatchToProps = (dispatch: any) => ({
-  handleSearch: (index: number, value: string) => dispatch(getSearchData(index, value))
+  handleSearch: (index: number, value: string) => dispatch(getSearchData(index, value)),
 });
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Main);
