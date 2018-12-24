@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import style from "./index.scss";
 import "./index.noneModules.css";
 import { CarouselCustom } from "../../components/carousel";
@@ -127,14 +127,14 @@ class DecorateMain extends React.Component<any, any> {
   public onSelect(value: any) {
     console.log("onSelect", value);
   }
-  public login() {
-    Cover.open(<Provider store={store}><Login/></Provider>);
-  }
-  public componentDidUpdate() {
-    if (!!this.props.logged.data) {
-      Cover.close();
-    }
-  }
+  // public login() {
+  //   Cover.open(<Provider store={store}><Login/></Provider>);
+  // }
+  // public componentDidUpdate() {
+  //   if (!!this.props.logged.data) {
+  //     Cover.close();
+  //   }
+  // }
   public render() {
     const { getFieldDecorator } = this.props.form;
     const { searchResult, logged } = this.props;
@@ -143,12 +143,6 @@ class DecorateMain extends React.Component<any, any> {
       <div styleName="style.wrap">
         <div styleName="style.header">
           <div styleName="style.headerTop">
-           <div styleName="style.login">
-           {!!logged.data ? (<Dropdown overlay={menu}>
-                      <span>用户中心</span>
-                    </Dropdown>) :
-                    <div onClick={() => this.login()}>登陆</div>}
-           </div>
           </div>
           <CarouselCustom slideData={this.state.carouselData} />
           <div styleName="style.tabWrap">
@@ -239,7 +233,7 @@ const mapStateToProps = (state: any) => {
   console.log(state);
   return({
   searchResult: state.mainPageState,
-  logged: state.login,
+  // logged: state.login,
 }); };
 const mapDispatchToProps = (dispatch: any) => ({
   handleSearch: (index: number, value: string) => dispatch(getSearchData(index, value)),

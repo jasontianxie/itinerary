@@ -1,9 +1,6 @@
 import * as React from "react";
 import { Form, Icon, Input, Button, Checkbox } from "antd";
 import "./index.scss";
-import axios from "axios";
-import { config } from "../../common/ajaxConfig.js";
-import Cookies from "js-cookie";
 import { connect } from "react-redux";
 import { login } from "../../../redux/actions/login.js";
 
@@ -13,20 +10,6 @@ class NormalLoginForm extends React.Component<any, any> {
   public handleSubmit = (e: any) => {
     e.preventDefault();
     this.props.form.validateFields((err: any, values: any) => {
-      // if (!err) {
-      //   console.log("Received values of form: ", values);
-      //   axios.post(config.mainDomain + "/users", values).then((response) => {
-      //     console.log(response.data);
-      //     if (response.data.length > 0) {
-      //       Cookies.set("username", response.data[0].name);
-      //       Cookies.set("userpass", response.data[0].pass);
-      //       Cookies.set("userid", response.data[0].id);
-      //     }
-      //   })
-      //     .catch((error) => {
-      //       console.log(error);
-      //     });
-      // }
       this.props.login(values);
     });
   }

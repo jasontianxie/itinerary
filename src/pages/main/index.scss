@@ -1,37 +1,35 @@
-.wrap{
+.wrap {
     min-width: 1200px;
-    >div{
+
+    >div {
         position: relative;
     }
 }
-.header{
-    
-}
-.content{
+
+.header {}
+
+.content {
     display: flex;
     flex-direction: column;
     width: 1200px;
     margin: 0 auto;
     padding: 50px;
-    .contentHeader{
+
+    .contentHeader {
         background: transparent;
     }
-    .listWrap{
+
+    .listWrap {
         flex: 1;
     }
 }
-.tabWrap{
+
+.tabWrap {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%)
+    transform: translate(-50%, -50%)
 }
 .headerTop{
-    height: 40px;
-    line-height: 40px;
-}
-.login{
-    float: right;
-    cursor:pointer;
-    padding:0 20px;
+
 }
