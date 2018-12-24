@@ -205,7 +205,7 @@ class DecorateMain extends React.Component<any, any> {
         </div>
         <div styleName="style.content">
           <div styleName="style.contentHeader">
-            {!!logged.data ? null : <Button href="/#/second" target="_blank">写游记</Button>}
+            {!!logged.data ? <Button href="/#/second" target="_blank">写游记</Button> : null}
           </div>
           <div styleName="style.listWrap">
             <List
@@ -230,7 +230,7 @@ class DecorateMain extends React.Component<any, any> {
 }
 const Main = Form.create()(DecorateMain);
 const mapStateToProps = (state: any) => {
-  console.log(state);
+  // console.log(state);
   return({
   searchResult: state.mainPageState,
   logged: state.login,

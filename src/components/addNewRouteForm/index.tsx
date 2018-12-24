@@ -113,7 +113,7 @@ class AddNewRouteForm extends React.Component<any, any> {
     }
     public onSelect(index: number, value: any) {
         console.log("onSelect id is:", index === 1 ? "startSpot" : "endSpot", value);
-        this.setState({ [index === 1 ? "startSpotId" : "endSpotId"]: value });
+        this.setState({ [index === 1 ? "startSpotId" : "endSpotId"]: parseInt(value, 10)});
     }
     public spotNameChange(index: number, value: any) {
         this.setState({ [index === 1 ? "startSpot" : "endSpot"]: value });
