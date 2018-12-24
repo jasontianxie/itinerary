@@ -205,7 +205,7 @@ class DecorateMain extends React.Component<any, any> {
         </div>
         <div styleName="style.content">
           <div styleName="style.contentHeader">
-            <Button href="/#/second" target="_blank">写游记</Button>
+            {!!logged.data ? null : <Button href="/#/second" target="_blank">写游记</Button>}
           </div>
           <div styleName="style.listWrap">
             <List
@@ -233,7 +233,7 @@ const mapStateToProps = (state: any) => {
   console.log(state);
   return({
   searchResult: state.mainPageState,
-  // logged: state.login,
+  logged: state.login,
 }); };
 const mapDispatchToProps = (dispatch: any) => ({
   handleSearch: (index: number, value: string) => dispatch(getSearchData(index, value)),
