@@ -58,7 +58,7 @@ class AddNewRouteForm extends React.Component<any, any> {
                 console.log({ ...this.state, ...{ startSpot: values.startSpot, endSpot: values.endSpot } });
                 this.setState({ startSpot: values.startSpot, endSpot: values.endSpot });
                 axios.post(config.mainDomain + "/newRouteForm", this.state).then((response) => {
-                    alert("success");
+                    console.log("success");
                 })
                     .catch((error) => {
                         console.log(error);
