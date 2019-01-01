@@ -102,7 +102,7 @@ class AddNewRouteForm extends React.Component<any, any> {
             return;
         }
         timerHandler = window.setTimeout(() => {
-            axios.post(config.mainDomain + "/mainPageSpotsData.json", { value: this.state[index === 1 ? "startSelect" : "endSelect"].concat(value) })
+            axios.post(config.mainDomain + "/spots", { value: this.state[index === 1 ? "startSelect" : "endSelect"].concat(value) })
             .then((response) => {
                 this.setState({ ["dataSource" + index]: response.data, [index === 1 ? "startSpotId" : "endSpotId"]: "" });
             })
