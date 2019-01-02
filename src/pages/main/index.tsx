@@ -8,9 +8,7 @@ import axios from "axios";
 import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Avatar, Icon , Dropdown, Menu} from "antd";
 import { Provider, connect } from "react-redux";
 import { getSearchData } from "../../../redux/actions/mainPageState.js";
-import Cover from "../../components/fullPageCover";
-import Login from "../../components/login";
-import {store} from "../../index";
+import {checkLogin} from "../../utils/checkLogin.js";
 
 let a = style;
 const TabPane = Tabs.TabPane;
@@ -205,7 +203,7 @@ class DecorateMain extends React.Component<any, any> {
         </div>
         <div styleName="style.content">
           <div styleName="style.contentHeader">
-            {!!logged.data ? <Button href="/#/second" target="_blank">写游记</Button> : null}
+            {(!!logged.data || checkLogin()) ? <Button href="/#/second" target="_blank">写游记</Button> : null}
           </div>
           <div styleName="style.listWrap">
             <List
