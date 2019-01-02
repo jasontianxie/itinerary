@@ -67,8 +67,13 @@ class AddNewRouteForm extends React.Component<any, any> {
         });
     }
     public datePickerOnChange(date: any, dateString: any) {
-        // console.log(date, dateString);
-        this.setState({ startTime: dateString[0], endTime: dateString[1] })
+        console.log(date, dateString);
+        const time1 = new Date(dateString[0]);
+        const time2 = new Date(dateString[1]);
+        // 计算时间差, 单位是毫秒
+        const minus = Math.abs(time2.getTime() - time1.getTime());
+        this.setState({ startTime: dateString[0], endTime: dateString[1], timeSpent: minus });
+
     }
     public setWaitTimeHours(value: any) {
         this.setState({ waitTimeHours: value });
@@ -120,7 +125,7 @@ class AddNewRouteForm extends React.Component<any, any> {
     }
     public render() {
         const { getFieldDecorator } = this.props.form;
-        const { dataSource1, dataSource2 } = this.state;
+        const { dataSource1, dataSource2, timeSpent} = this.state;
         const children1 = dataSource1.map((item: any) => <AOption key={item.id} data-spot-id={item.id}>{item.fullname}</AOption>);
         const children2 = dataSource2.map((item: any) => <AOption key={item.id} data-spot-id={item.id}>{item.fullname}</AOption>);
         const formItemLayout = {
@@ -219,7 +224,7 @@ class AddNewRouteForm extends React.Component<any, any> {
                         label="耗时"
                         {...formItemLayout}
                     >
-                        222
+                        {`${Math.round(timeSpent / 1000 / 60 / 60)}时${Math.round(timeSpent / 1000 / 60 % 60)}分${timeSpent / 1000 % 60}秒`}
               </FormItem>
                     <FormItem
                         label="等待时间"
