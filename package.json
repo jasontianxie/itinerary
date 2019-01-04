@@ -54,6 +54,7 @@
     "react-dom": "^16.4.2",
     "react-redux": "^5.1.0",
     "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.7",
     "sass-lint": "^1.12.1",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",

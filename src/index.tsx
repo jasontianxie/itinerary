@@ -10,8 +10,9 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "../redux/reducers/index.js";
 import thunk from "redux-thunk";
 import Header from "./components/header/index";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.render(
     <Provider store={store}>
@@ -24,5 +25,5 @@ ReactDOM.render(
     </HashRouter>
     </Provider>
     ,
-    document.getElementById("appContainer")
-)
+    document.getElementById("appContainer"),
+);
