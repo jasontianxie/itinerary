@@ -1,29 +1,29 @@
-import { Cascader } from 'antd';
-import * as React from 'react';
+import { Cascader } from "antd";
+import * as React from "react";
 
 const options = [{
-  value: '重庆',
-  label: '重庆',
+  value: "中国",
+  label: "中国",
   isLeaf: false,
 }, {
-  value: '陕西',
-  label: '陕西',
+  value: "俄罗斯",
+  label: "俄罗斯",
   isLeaf: false,
 }];
 
 export class LazyOptions extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
-    this.state = { options }
+    this.state = { options };
     this.onChange = this.onChange.bind(this);
   }
 
-  onChange = (value: any, selectedOptions: any) => {
+  public onChange = (value: any, selectedOptions: any) => {
     // console.log(value, selectedOptions);
     this.props.getlazyloadCascader(this.props.index, value);
   }
 
-  loadData = (selectedOptions: any) => {
+  public loadData = (selectedOptions: any) => {
     const targetOption = selectedOptions[selectedOptions.length - 1];
     targetOption.loading = true;
 
@@ -31,11 +31,11 @@ export class LazyOptions extends React.Component<any, any> {
     setTimeout(() => {
       targetOption.loading = false;
       targetOption.children = [{
-        label: targetOption.label == '重庆' ? '永川区' : '西安市',
-        value: targetOption.label == '重庆' ? '永川区' : '西安市'
+        label: targetOption.label == "重庆" ? "永川区" : "西安市",
+        value: targetOption.label == "重庆" ? "永川区" : "西安市"
       }, {
-        label: targetOption.label == '重庆' ? '大足区' : '咸阳市',
-        value: targetOption.label == '重庆' ? '大足区' : '咸阳市',
+        label: targetOption.label == "重庆" ? "大足区" : "咸阳市",
+        value: targetOption.label == "重庆" ? "大足区" : "咸阳市",
       }];
       this.setState({
         options: [...this.state.options],
@@ -43,7 +43,7 @@ export class LazyOptions extends React.Component<any, any> {
     }, 500);
   }
 
-  render() {
+  public render() {
     return (
       <Cascader
         options={this.state.options}
