@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./index.scss";
 import { Form, Input, InputNumber, DatePicker, Button, Col, Select, AutoComplete } from "antd";
-import { LazyOptions } from "../../components/cascader";
+import LazyOptions from "../../components/cascader";
 import axios from "axios";
 import { config } from "../../common/ajaxConfig.js";
 import Cookies from "js-cookie";

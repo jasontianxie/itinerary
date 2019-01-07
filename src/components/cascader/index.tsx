@@ -1,5 +1,7 @@
 import { Cascader } from "antd";
 import * as React from "react";
+import { connect } from "react-redux";
+import { getCountryCityDistrict } from "../../../redux/actions/getCountryCityDistrict.js";
 
 const options = [{
   value: "中国",
@@ -11,11 +13,12 @@ const options = [{
   isLeaf: false,
 }];
 
-export class LazyOptions extends React.Component<any, any> {
+class LazyOptions extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = { options };
     this.onChange = this.onChange.bind(this);
+    this.loadData = this.loadData.bind(this);
   }
 
   public onChange = (value: any, selectedOptions: any) => {
@@ -28,19 +31,20 @@ export class LazyOptions extends React.Component<any, any> {
     targetOption.loading = true;
 
     // load options lazily
-    setTimeout(() => {
-      targetOption.loading = false;
-      targetOption.children = [{
-        label: targetOption.label == "重庆" ? "永川区" : "西安市",
-        value: targetOption.label == "重庆" ? "永川区" : "西安市"
-      }, {
-        label: targetOption.label == "重庆" ? "大足区" : "咸阳市",
-        value: targetOption.label == "重庆" ? "大足区" : "咸阳市",
-      }];
-      this.setState({
-        options: [...this.state.options],
-      });
-    }, 500);
+    // setTimeout(() => {
+    targetOption.loading = false;
+    // targetOption.children = [{
+    //   label: targetOption.label == "重庆" ? "永川区" : "西安市",
+    //   value: targetOption.label == "重庆" ? "永川区" : "西安市"
+    // }, {
+    //   label: targetOption.label == "重庆" ? "大足区" : "咸阳市",
+    //   value: targetOption.label == "重庆" ? "大足区" : "咸阳市",
+    // }];
+    targetOption.children = this.props.countryCityDistricts;
+    this.setState({
+      options: [...this.state.options],
+    });
+    // }, 500);
   }
 
   public render() {
@@ -54,3 +58,16 @@ export class LazyOptions extends React.Component<any, any> {
     );
   }
 }
+
+const mapStateToProps = (state: any) => {
+  return({
+    countryCityDistricts: state.countryCityDistricts,
+}); };
+const mapDispatchToProps = (dispatch: any) => ({
+  getCountryCityDistrict: (values: string) => dispatch(getCountryCityDistrict(values)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LazyOptions);
