@@ -62,12 +62,6 @@ const menu = (
     </Menu.Item>
   </Menu>
 );
-// const IconText = ({ type, text }:any) => (
-//   <span>
-//     <Icon type={type} style={{ marginRight: 8 }} />
-//     {text}
-//   </span>
-// );
 
 class DecorateMain extends React.Component<any, any> {
   constructor(props: any) {
@@ -109,30 +103,15 @@ class DecorateMain extends React.Component<any, any> {
       window.clearTimeout(timerHandler);
     }
     if (value === "") {
-      // this.setState({ dataSource: []});
       return;
     }
     timerHandler = window.setTimeout(() => {
-      // axios.get(config.mainDomain + "/mainPageSpotsData.json?search="+value).then((response) => {
-      //   this.setState({ dataSource: response.data })
-      // })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
       this.props.handleSearch(index, value);
     }, 1000); // search delay for 1 second
   }
   public onSelect(value: any) {
     console.log("onSelect", value);
   }
-  // public login() {
-  //   Cover.open(<Provider store={store}><Login/></Provider>);
-  // }
-  // public componentDidUpdate() {
-  //   if (!!this.props.logged.data) {
-  //     Cover.close();
-  //   }
-  // }
   public render() {
     const { getFieldDecorator } = this.props.form;
     const { searchResult, logged } = this.props;
@@ -228,7 +207,6 @@ class DecorateMain extends React.Component<any, any> {
 }
 const Main = Form.create()(DecorateMain);
 const mapStateToProps = (state: any) => {
-  // console.log(state);
   return({
   searchResult: state.mainPageState,
   logged: state.login,
