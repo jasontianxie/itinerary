@@ -7,7 +7,7 @@ export const getCountryCityDistrict = (state=initState,action)=>{
         return state;
         case 'GET_COUNTRY_CITY_DISTRICT_SUCCESS':
         console.log('getCountryCityDistrict success');
-        return {...state,data:action.payload}
+        return {...state,data:action.payload,status:"success"}
         case 'GET_COUNTRY_CITY_DISTRICT_FAIL':
         console.log('getCountryCityDistrict fail');
         return state;

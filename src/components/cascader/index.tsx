@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { getCountryCityDistrict } from "../../../redux/actions/getCountryCityDistrict.js";
 
 const options = [{
-  value: "中国",
+  value: "china",
   label: "中国",
   isLeaf: false,
 }, {
-  value: "俄罗斯",
+  value: "russia",
   label: "俄罗斯",
   isLeaf: false,
 }];
@@ -30,6 +30,7 @@ class LazyOptions extends React.Component<any, any> {
     const targetOption = selectedOptions[selectedOptions.length - 1];
     targetOption.loading = true;
 
+    this.props.getCountryCityDistrict(targetOption.value)
     // load options lazily
     // setTimeout(() => {
     targetOption.loading = false;

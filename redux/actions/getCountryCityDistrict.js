@@ -9,7 +9,7 @@ export function getCountryCityDistrict(values) {
             type: 'GET_COUNTRY_CITY_DISTRICT_START',
             payload: ''
         });
-        axios.post(config.mainDomain + '/countryCityDistricts', values).then((response) => {
+        axios.get(config.mainDomain + '/public/country-province-city-district/' + values + ".json",{url: config.mainDomain + '/public/country-province-city-district',headers: {"Access-Control-Allow-Origin": "*"}}).then((response) => {
                 dispatch({
                     type: 'GET_COUNTRY_CITY_DISTRICT_SUCCESS',
                     payload: response.data
