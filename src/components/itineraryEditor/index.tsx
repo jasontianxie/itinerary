@@ -1,9 +1,10 @@
 import * as React from "react";
 import "./index.scss";
+import axios from "axios";
+import { config } from "../../../src/common/ajaxConfig.js";
+import { Button } from "antd";
+import Cookies from "js-cookie";
 
-// interface PropsStyle {
-//     (input: string): void
-// }
 type PropsStyle = (input: string) => void;
 
 export default class ItineraryEditor extends React.Component<PropsStyle, any> {
@@ -61,12 +62,21 @@ export default class ItineraryEditor extends React.Component<PropsStyle, any> {
         const range = selection.createRange ? selection.createRange() : selection.getRangeAt(0);
         this.setState({ selection, range });
     }
+    public submit() {
+        axios.post(config.mainDomain + "/itineraries", {userId: Cookies.get("userid"), contentHtml: this.textInput.current.innerHTML}).then((response) => {
+           console.log("success");
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     public render() {
         return (
         <div styleName="edit-wrap">
             <div onClick={() => this.insertPic()}>click me</div>
             <div contentEditable={true} styleName = "edit" ref={this.textInput} onClick={(e) => this.click(e)} onKeyUp={(e) => this.keyup(e)}>
             </div>
+            <Button type="primary" onClick={() => this.submit()}>保存</Button>
         </div>
         );
     }
