@@ -11,9 +11,9 @@ declare module '*.js';
 //     const config:AjaxConfig;
 //     export {config};
 // }
-// interface Window {
-//     BMap:any
-// }
-// declare var window:Window
+interface Document {
+    selection:any
+}
+declare var document:Document;
 
 declare module 'BMap';
