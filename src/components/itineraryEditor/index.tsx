@@ -49,6 +49,13 @@ export default class ItineraryEditor extends React.Component<PropsStyle, any> {
             selection.addRange(range);
         }
     }
+    public keyup(e: any) {
+        if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) {
+            const selection = window.getSelection ? window.getSelection() : document.selection;
+            const range = selection.createRange ? selection.createRange() : selection.getRangeAt(0);
+            this.setState({ selection, range });
+        }
+    }
     public click(e: any) {
         const selection = window.getSelection ? window.getSelection() : document.selection;
         const range = selection.createRange ? selection.createRange() : selection.getRangeAt(0);
@@ -58,7 +65,7 @@ export default class ItineraryEditor extends React.Component<PropsStyle, any> {
         return (
         <div styleName="edit-wrap">
             <div onClick={() => this.insertPic()}>click me</div>
-            <div contentEditable={true} styleName = "edit" ref={this.textInput} onClick={(e) => this.click(e)}>
+            <div contentEditable={true} styleName = "edit" ref={this.textInput} onClick={(e) => this.click(e)} onKeyUp={(e) => this.keyup(e)}>
             </div>
         </div>
         );
