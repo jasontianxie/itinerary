@@ -16,4 +16,9 @@ interface Document {
 }
 declare var document:Document;
 
+interface Window {
+    clipboardData?:any
+}
+declare var window:Window;
+
 declare module 'BMap';

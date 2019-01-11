@@ -13,18 +13,27 @@ export default class ItineraryEditor extends React.Component<PropsStyle, any> {
         super(props);
         this.textInput = React.createRef();
         this.state = {
-            contentFirstHalf: "",
-            contentSecondHalf: "",
-            editContent : "",
+            focused: false,
             selection: null,
             range: null,
         };
     }
-    public insertPic() {
-        const str =
-        "<img style='width:100px;height:100px' src='https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2310514390,3580363630&amp;fm=27&amp;gp=0.jpg'/>";
+    public insertPicOrPaste(e: any) {
+        let str = "";
         const {selection, range} = this.state;
 
+        if (!this.state.focused || !range) { // 当用户没有点击输入框的时候，如果点击插入图片，则插入操作不生效
+            return;
+        }
+        if (e === "insertPic") { // 如果是插入图片或者表情
+            str = "<img style='width:100px;height:100px' src='https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2310514390,3580363630&amp;fm=27&amp;gp=0.jpg'/>";
+        } else { // 如果是用户粘贴内容
+            e.preventDefault(); // 不使用默认的粘贴方法，而是使用下面的range来插入内容
+            str = window.clipboardData && window.clipboardData.getData ?
+            window.clipboardData.getData("Text") // ie浏览器，getData("Text")只会获取纯文本，除了Text，还有其他参数吗？？
+            : e.clipboardData.getData("Text"); // 非ie浏览器，getData("Text")只会获取纯文本
+            str = str.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // 将script标签替换成文本
+        }
         if (!window.getSelection) {// ie 浏览器
             this.textInput.current.focus();
             range.pasteHTML(str);
@@ -36,7 +45,8 @@ export default class ItineraryEditor extends React.Component<PropsStyle, any> {
 
             this.textInput.current.focus();
             range.collapse(false);
-            while (hasRlastChild && hasRlastChild.nodeName.toLowerCase() == "br" && hasRlastChild.previousSibling && hasRlastChild.previousSibling.nodeName.toLowerCase() == "br") {
+            while (hasRlastChild && hasRlastChild.nodeName.toLowerCase() === "br"
+            && hasRlastChild.previousSibling && hasRlastChild.previousSibling.nodeName.toLowerCase() === "br") {
                 const element: any = hasRlastChild;
                 hasRlastChild = hasRlastChild.previousSibling;
                 hasR.removeChild(element);
@@ -50,12 +60,20 @@ export default class ItineraryEditor extends React.Component<PropsStyle, any> {
             selection.addRange(range);
         }
     }
+    public input(e: any) {
+        const selection = window.getSelection ? window.getSelection() : document.selection;
+        const range = selection.createRange ? selection.createRange() : selection.getRangeAt(0);
+        this.setState({ selection, range });
+    }
     public keyup(e: any) {
-        if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) {
+        if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) { // 上下左右键
             const selection = window.getSelection ? window.getSelection() : document.selection;
             const range = selection.createRange ? selection.createRange() : selection.getRangeAt(0);
             this.setState({ selection, range });
         }
+    }
+    public focus(bool: any) {
+        this.setState({ focused: bool });
     }
     public click(e: any) {
         const selection = window.getSelection ? window.getSelection() : document.selection;
@@ -73,10 +91,13 @@ export default class ItineraryEditor extends React.Component<PropsStyle, any> {
     public render() {
         return (
         <div styleName="edit-wrap">
-            <div onClick={() => this.insertPic()}>click me</div>
-            <div contentEditable={true} styleName = "edit" ref={this.textInput} onClick={(e) => this.click(e)} onKeyUp={(e) => this.keyup(e)}>
+            <div onClick={() => this.insertPicOrPaste("insertPic")}>插入测试图片</div>
+            <div contentEditable={true} styleName = "edit" ref={this.textInput}
+            onPaste={(e) => this.insertPicOrPaste(e)} onClick={(e) => this.click(e)}
+            onKeyUp={(e) => this.keyup(e)}
+            onFocus={() => this.focus(true)} onInput={(e) => this.input(e)}>
             </div>
-            <Button type="primary" onClick={() => this.submit()}>保存</Button>
+            <Button type="primary" styleName = "edit-submit" onClick={() => this.submit()}>保存</Button>
         </div>
         );
     }
