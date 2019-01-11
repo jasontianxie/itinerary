@@ -26,7 +26,8 @@ export default class ItineraryEditor extends React.Component<PropsStyle, any> {
             return;
         }
         if (e === "insertPic") { // 如果是插入图片或者表情
-            str = "<img style='width:100px;height:100px' src='https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2310514390,3580363630&amp;fm=27&amp;gp=0.jpg'/>";
+            const background = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2310514390,3580363630&amp;fm=27&amp;gp=0.jpg";
+            str = "<img src='" + background + "' style='width:100px;height:100px;'/>";
         } else { // 如果是用户粘贴内容
             e.preventDefault(); // 不使用默认的粘贴方法，而是使用下面的range来插入内容
             str = window.clipboardData && window.clipboardData.getData ?
