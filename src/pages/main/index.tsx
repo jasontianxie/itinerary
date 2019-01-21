@@ -173,7 +173,8 @@ class DecorateMain extends React.Component<any, any> {
                     )}
                   </FormItem>
                   <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">搜索</Button>
+                    <Button type="primary" htmlType="submit">快速搜索</Button>
+                    <Button type="default" htmlType="submit" style={{marginLeft: "20px"}}>高级定制</Button>
                   </FormItem>
                 </Form>
               </TabPane>
