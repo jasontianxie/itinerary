@@ -103,6 +103,7 @@ class DecorateMain extends React.Component<any, any> {
     this.props.form.validateFieldsAndScroll((err: any, values: any) => {
       if (!err) {
         console.log("Received values of form: ", values);
+        window.open("/#/createItinerary", "_blank");
       }
     });
   }

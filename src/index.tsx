@@ -3,6 +3,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import Main from "./pages/main/index";
 import Second from "./pages/second/loadabale";
+import CreateItinerary from "./pages/createItinerary";
 import {HashRouter, Route} from "react-router-dom";
 import "./index.scss";
 import { Provider } from "react-redux";
@@ -21,6 +22,7 @@ ReactDOM.render(
             <Header/>
             <Route exact path="/" component={Main}/>
             <Route path="/second" component={Second}/>
+            <Route path="/createItinerary" component={CreateItinerary}/>
         </div>
     </HashRouter>
     </Provider>

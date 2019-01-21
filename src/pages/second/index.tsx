@@ -5,6 +5,7 @@ import AddNewRouteForm from "../../components/addNewRouteForm";
 // import { Editor } from 'react-draft-wysiwyg';
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import ItineraryEditor from "../../components/itineraryEditor/index";
+import DocumentTitle from "react-document-title";
 
 const data = [
   {startSpot:'chonging',endSpot:'chengdu',startTime:'2018-11-01 12:00:00',endTime:'2018-11-01 13:00:00',spentTime:'0d1h0m0s',waitTime:'1h',vehicle:'高铁',cost:'100RMB',comments:''},
@@ -22,12 +23,13 @@ class Second extends React.Component<any,any> {
         itineraryId:null//游记的id，如果是新增的游记，那么为null，如果是编辑已经存在的游记，则有值
       }
     }
-    componentWillMount(){
-      document.title = '新增游记'
-    } 
+    // componentWillMount(){
+    //   document.title = ''
+    // } 
     render() {
       return (
-      <div className="wrap">
+        <DocumentTitle title="新增游记111">
+          <div className="wrap">
         <div styleName="style.detailRecord">
           {/* <Editor
             wrapperClassName="wrapper-class"
@@ -56,6 +58,7 @@ class Second extends React.Component<any,any> {
           />
         </div>
       </div>
+        </DocumentTitle>
       )
     }
   }
