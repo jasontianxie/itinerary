@@ -28,7 +28,7 @@ class Second extends React.Component<any,any> {
     // } 
     render() {
       return (
-        <DocumentTitle title="新增游记111">
+        <DocumentTitle title="新增游记">
           <div className="wrap">
         <div styleName="style.detailRecord">
           {/* <Editor
