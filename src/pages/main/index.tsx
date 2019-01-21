@@ -5,9 +5,8 @@ import { CarouselCustom } from "../../components/carousel";
 import { config } from "../../common/ajaxConfig.js";
 import ListItem from "../../components/listItem";
 import axios from "axios";
-import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Avatar, Icon , Dropdown, Menu} from "antd";
-import { Provider, connect } from "react-redux";
-import { getSearchData } from "../../../redux/actions/mainPageState.js";
+import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Menu} from "antd";
+import { connect } from "react-redux";
 import {checkLogin} from "../../utils/checkLogin.js";
 import LazyOptions from "../../components/cascader";
 
@@ -108,36 +107,23 @@ class DecorateMain extends React.Component<any, any> {
     });
   }
   public handleSearch = (index: number, value: any) => {
-
-    if (timerHandler) {
-        window.clearTimeout(timerHandler);
-    }
-    if (value === "") {
-        this.setState({ ["dataSource" + index]: [] });
-        return;
-    }
-    timerHandler = window.setTimeout(() => {
-        axios.post(config.mainDomain + "/spots", { value: this.state[index === 1 ? "startSelect" : "endSelect"].concat(value) })
-        .then((response) => {
-            this.setState({ ["dataSource" + index]: response.data, [index === 1 ? "startSpotId" : "endSpotId"]: "" });
-        })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, 1000); // search delay for 1 second
-}
-  // public handleSearch = (index: number, value: any) => {
-
-  //   if (timerHandler) {
-  //     window.clearTimeout(timerHandler);
-  //   }
-  //   if (value === "") {
-  //     return;
-  //   }
-  //   timerHandler = window.setTimeout(() => {
-  //     this.props.handleSearch(index, value);
-  //   }, 1000); // search delay for 1 second
-  // }
+      if (timerHandler) {
+          window.clearTimeout(timerHandler);
+      }
+      if (value === "") {
+          this.setState({ ["dataSource" + index]: [] });
+          return;
+      }
+      timerHandler = window.setTimeout(() => {
+          axios.post(config.mainDomain + "/spots", { value: this.state[index === 1 ? "startSelect" : "endSelect"].concat(value) })
+          .then((response) => {
+              this.setState({ ["dataSource" + index]: response.data, [index === 1 ? "startSpotId" : "endSpotId"]: "" });
+          })
+              .catch((error) => {
+                  console.log(error);
+              });
+      }, 1000); // search delay for 1 second
+  }
   public getlazyloadCascader(startSelect: number, state: any) {
       if (startSelect === 1) {
           this.setState({ startSelect: state });
@@ -154,8 +140,8 @@ class DecorateMain extends React.Component<any, any> {
 }
   public render() {
     const { getFieldDecorator } = this.props.form;
-    const { searchResult, logged } = this.props;
-    const { dataSource1, dataSource2, timeSpent} = this.state;
+    const { logged } = this.props;
+    const { dataSource1, dataSource2} = this.state;
     const children1 = dataSource1.map((item: any) => <AOption key={item.id} data-spot-id={item.id}>{item.fullname}</AOption>);
     const children2 = dataSource2.map((item: any) => <AOption key={item.id} data-spot-id={item.id}>{item.fullname}</AOption>);
 
@@ -276,13 +262,8 @@ class DecorateMain extends React.Component<any, any> {
 const Main = Form.create()(DecorateMain);
 const mapStateToProps = (state: any) => {
   return({
-  searchResult: state.mainPageState,
   logged: state.login,
 }); };
-const mapDispatchToProps = (dispatch: any) => ({
-  handleSearch: (index: number, value: string) => dispatch(getSearchData(index, value)),
-});
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(Main);
