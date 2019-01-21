@@ -9,12 +9,14 @@ import { Tabs, DatePicker, Form, Button, AutoComplete, Input, List, Avatar, Icon
 import { Provider, connect } from "react-redux";
 import { getSearchData } from "../../../redux/actions/mainPageState.js";
 import {checkLogin} from "../../utils/checkLogin.js";
+import LazyOptions from "../../components/cascader";
 
 let a = style;
 const TabPane = Tabs.TabPane;
 const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
 const Search = Input.Search;
+const AOption = AutoComplete.Option;
 let timerHandler: any = null;
 const formItemLayout = {
   labelCol: {
@@ -68,12 +70,20 @@ class DecorateMain extends React.Component<any, any> {
     super(props);
     this.state = {
       carouselData: [1, 2, 3, 4, 5],
-      dataSource: [],
+      dataSource1: [],
+      dataSource2: [],
+      startSelect: [],
+      startSpot: "",
+      startSpotId: "",
+      endSelect: [],
+      endSpot: "",
+      endSpotId: "",
     };
     this.datePickerOnChange = this.datePickerOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.onSelect = this.onSelect.bind(this);
+    this.getlazyloadCascader = this.getlazyloadCascader.bind(this);
   }
   public componentWillMount() {
     this.fetchCarouselData();
@@ -100,21 +110,54 @@ class DecorateMain extends React.Component<any, any> {
   public handleSearch = (index: number, value: any) => {
 
     if (timerHandler) {
-      window.clearTimeout(timerHandler);
+        window.clearTimeout(timerHandler);
     }
     if (value === "") {
-      return;
+        this.setState({ ["dataSource" + index]: [] });
+        return;
     }
     timerHandler = window.setTimeout(() => {
-      this.props.handleSearch(index, value);
+        axios.post(config.mainDomain + "/spots", { value: this.state[index === 1 ? "startSelect" : "endSelect"].concat(value) })
+        .then((response) => {
+            this.setState({ ["dataSource" + index]: response.data, [index === 1 ? "startSpotId" : "endSpotId"]: "" });
+        })
+            .catch((error) => {
+                console.log(error);
+            });
     }, 1000); // search delay for 1 second
+}
+  // public handleSearch = (index: number, value: any) => {
+
+  //   if (timerHandler) {
+  //     window.clearTimeout(timerHandler);
+  //   }
+  //   if (value === "") {
+  //     return;
+  //   }
+  //   timerHandler = window.setTimeout(() => {
+  //     this.props.handleSearch(index, value);
+  //   }, 1000); // search delay for 1 second
+  // }
+  public getlazyloadCascader(startSelect: number, state: any) {
+      if (startSelect === 1) {
+          this.setState({ startSelect: state });
+      } else {
+          this.setState({ endSelect: state });
+      }
   }
-  public onSelect(value: any) {
-    console.log("onSelect", value);
+  public onSelect(index: number, value: any) {
+    console.log("onSelect id is:", index === 1 ? "startSpot" : "endSpot", value);
+    this.setState({ [index === 1 ? "startSpotId" : "endSpotId"]: parseInt(value, 10)});
   }
+  public spotNameChange(index: number, value: any) {
+    this.setState({ [index === 1 ? "startSpot" : "endSpot"]: value });
+}
   public render() {
     const { getFieldDecorator } = this.props.form;
     const { searchResult, logged } = this.props;
+    const { dataSource1, dataSource2, timeSpent} = this.state;
+    const children1 = dataSource1.map((item: any) => <AOption key={item.id} data-spot-id={item.id}>{item.fullname}</AOption>);
+    const children2 = dataSource2.map((item: any) => <AOption key={item.id} data-spot-id={item.id}>{item.fullname}</AOption>);
 
     return (
       <div styleName="style.wrap">
@@ -133,7 +176,7 @@ class DecorateMain extends React.Component<any, any> {
               </TabPane>
               <TabPane tab="自己去" key="1">
                 <Form onSubmit={this.handleSubmit}>
-                  <FormItem label="输入起止时间：" {...formItemLayout}>
+                <FormItem label="输入起止时间：" {...formItemLayout}>
                     {getFieldDecorator("startEndDateTime", {
                       rules: [{
                         required: true, message: "请输入起止时间!",
@@ -142,36 +185,60 @@ class DecorateMain extends React.Component<any, any> {
                       <RangePicker onChange={this.datePickerOnChange} showTime={true} format="YYYY-MM-DD HH:mm:ss" placeholder={["开始时间", "结束时间"]} />
                     )}
                   </FormItem>
-                  <FormItem {...formItemLayout} label="输入出发点名称：">
-                    {getFieldDecorator("startSpot", {
-                      rules: [{
-                        required: true, message: "请输入出发点名称!",
-                      }],
-                    })(
-                      <AutoComplete
-                        dataSource={searchResult.dataSource1}
-                        style={{ width: 350 }}
-                        onSelect={this.onSelect}
-                        onSearch={(value) => this.handleSearch(1, value)}
-                        placeholder="开始地点名称"
-                      />,
-                    )}
-                  </FormItem>
-                  <FormItem {...formItemLayout} label="输入到达点名称：">
-                    {getFieldDecorator("endSpot", {
-                      rules: [{
-                        required: true, message: "请输入到达点名称!",
-                      }],
-                    })(
-                      <AutoComplete
-                        dataSource={searchResult.dataSource2}
-                        style={{ width: 350 }}
-                        onSelect={this.onSelect}
-                        onSearch={(value) => this.handleSearch(2, value)}
-                        placeholder="结束地点名称"
-                      />,
-                    )}
-                  </FormItem>
+                  <FormItem
+                        label="选择出发地"
+                        {...formItemLayout}
+                    >
+                        <LazyOptions getlazyloadCascader={this.getlazyloadCascader} index={1} />
+                    </FormItem>
+                    <FormItem
+                        label="出发地具体名称"
+                        {...formItemLayout}
+                    >
+                        {getFieldDecorator("startSpot", {
+                            rules: [{
+                                message: "输入出发地!", required: true,
+                            }],
+                        })(
+                            <AutoComplete
+                                // dataSource={dataSource1.map((item:any)=>item.fullname)}
+                                style={{ width: "100%" }}
+                                onSelect={(value) => this.onSelect(1, value)}
+                                onSearch={(value) => this.handleSearch(1, value)}
+                                onChange={(value) => this.spotNameChange(1, value)}
+                                placeholder="开始地点名称"
+                            >
+                                {children1}
+                            </AutoComplete>,
+                        )}
+                    </FormItem>
+                    <FormItem
+                        label="选择目的地"
+                        {...formItemLayout}
+                    >
+                        <LazyOptions getlazyloadCascader={this.getlazyloadCascader} index={2} />
+                    </FormItem>
+                    <FormItem
+                        label="目的地具体名称"
+                        {...formItemLayout}
+                    >
+                        {getFieldDecorator("endSpot", {
+                            rules: [{
+                                message: "输入目的地!", required: true,
+                            }],
+                        })(
+                            <AutoComplete
+                                // dataSource={dataSource2.map((item:any)=>item.fullname)}
+                                style={{ width: "100%" }}
+                                onSelect={(value) => this.onSelect(2, value)}
+                                onSearch={(value) => this.handleSearch(2, value)}
+                                onChange={(value) => this.spotNameChange(2, value)}
+                                placeholder="开始地点名称"
+                            >
+                                {children2}
+                            </AutoComplete>,
+                        )}
+                    </FormItem>
                   <FormItem {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">快速搜索</Button>
                     <Button type="default" htmlType="submit" style={{marginLeft: "20px"}}>高级定制</Button>
