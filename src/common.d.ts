@@ -19,6 +19,8 @@ declare var document:Document;
 
 interface Window {
     clipboardData?:any
+    attachEvent?:any
+    detachEvent?:any
 }
 declare var window:Window;
 

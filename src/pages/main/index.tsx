@@ -77,6 +77,8 @@ class DecorateMain extends React.Component<any, any> {
       endSelect: [],
       endSpot: "",
       endSpotId: "",
+      startTime: "",
+      endTime: "",
     };
     this.datePickerOnChange = this.datePickerOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -89,21 +91,31 @@ class DecorateMain extends React.Component<any, any> {
   }
   public fetchCarouselData() {
     axios.get(config.mainDomain + "/mainPageSlideData").then((response) => {
-      this.setState({ carouselData: response.data })
+      this.setState({ carouselData: response.data });
     })
       .catch((error) => {
         console.log(error);
       });
   }
   public datePickerOnChange(date: any, dateString: any) {
-    console.log(date, dateString);
+    // console.log(date, dateString);
+    this.setState({ startTime: dateString[0], endTime: dateString[1]});
   }
   public handleSubmit = (e: any) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err: any, values: any) => {
       if (!err) {
-        console.log("Received values of form: ", values);
-        window.open("/#/createItinerary", "_blank");
+        // console.log("Received values of form: ", values);
+        const subWin = window.open("/#/createItinerary", "_blank");
+        subWin.onload = () => { // 子窗口加载好了过后再发送消息，否则itinerary/src/pages/createItinerary/index.tsx那边在componentDidMount方法中收不到消息
+          subWin.postMessage(JSON.stringify(this.state, (key, value) => {
+            if (key === "carouselData" || key === "dataSource1" || key === "dataSource2") { // 过滤一些属性，http://www.runoob.com/js/javascript-json-stringify.html
+              return undefined;
+            } else {
+              return value;
+            }
+          }), "/");
+        };
       }
     });
   }

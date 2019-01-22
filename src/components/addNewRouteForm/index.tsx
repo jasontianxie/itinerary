@@ -38,7 +38,7 @@ class AddNewRouteForm extends React.Component<any, any> {
             vehicle: "flight",
             waitTimeHours: 0,
             waitTimeMinutes: 0,
-        }
+        };
         this.datePickerOnChange = this.datePickerOnChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.setWaitTimeHours = this.setWaitTimeHours.bind(this);
