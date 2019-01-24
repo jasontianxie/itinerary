@@ -24,7 +24,8 @@ export default class DecorateMain extends React.Component<any, any> {
     public render() {
     return (
         <DocumentTitle title="创建行程">
-            <div>create a itinerary</div>
+            <div styleName="map"></div>
+            <div styleName="routes"></div>
         </DocumentTitle>
         );
     }
