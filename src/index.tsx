@@ -18,7 +18,7 @@ export const store = createStore(rootReducer, composeWithDevTools(applyMiddlewar
 ReactDOM.render(
     <Provider store={store}>
     <HashRouter>
-        <div>
+        <div styleName="wrap">
             <Header/>
             <Route exact path="/" component={Main}/>
             <Route path="/second" component={Second}/>
