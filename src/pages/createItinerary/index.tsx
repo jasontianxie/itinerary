@@ -1,8 +1,18 @@
 import React from "react";
 import DocumentTitle from "react-document-title";
+import "./index.scss";
+import BMap from "BMap";
 
 export default class DecorateMain extends React.Component<any, any> {
+    public baiduMap: any = null;
+    constructor(props: any) {
+        super(props);
+        this.baiduMap = React.createRef();
+    }
     public componentDidMount() {
+        const map = new BMap.Map(this.baiduMap.current);
+        const point = new BMap.Point(116.404, 39.915);
+        map.centerAndZoom(point, 15);
         window.addEventListener("message", () => {
             if (window.addEventListener) {
                 window.addEventListener("message", handleMessage, false);
@@ -24,8 +34,10 @@ export default class DecorateMain extends React.Component<any, any> {
     public render() {
     return (
         <DocumentTitle title="创建行程">
-            <div styleName="map"></div>
-            <div styleName="routes"></div>
+            <div styleName="wrap">
+                <div styleName="map" ref={this.baiduMap}>this is baidu map container</div>
+                <div styleName="routes"></div>
+            </div>
         </DocumentTitle>
         );
     }
