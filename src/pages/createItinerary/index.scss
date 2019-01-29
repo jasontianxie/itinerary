@@ -1,8 +1,11 @@
 $main-back: #0f0;
-$route-back: #aaa;
-$main-back-alpha: .9;
-$main-back-color: rgba($main-back, $main-back-alpha);
-$route-back-color: rgba($route-back, $main-back-alpha);
+$new-route-border: #0f0;
+$route-back: #fff;
+$alpha1: .9;
+$alpha2: .1;
+$main-back-color: rgba($main-back, $alpha1);
+$route-back-color: rgba($route-back, $alpha1);
+$new-route-back-color: rgba($main-back, $alpha2);
 
 .wrap {
     height: calc(100% - 40px);
@@ -17,9 +20,11 @@ $route-back-color: rgba($route-back, $main-back-alpha);
 .routes {
     position: fixed;
     top: 40px;
-    left: 0;
+    left: 20px;
     width: 550px;
     height: 100%;
+    padding: 20px 0 50px;
+    overflow-y: auto;
     background-color: $route-back-color;
 
     :global(.ant-calendar-picker) {
@@ -27,3 +32,16 @@ $route-back-color: rgba($route-back, $main-back-alpha);
     }
 }
 
+.new-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    overflow: hidden;
+
+    &:hover {
+        background-color: $new-route-back-color;
+    }
+}
+
+.form-item-wrap {
+    
+}
