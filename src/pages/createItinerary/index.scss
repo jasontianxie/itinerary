@@ -21,5 +21,9 @@ $route-back-color: rgba($route-back, $main-back-alpha);
     width: 550px;
     height: 100%;
     background-color: $route-back-color;
+
+    :global(.ant-calendar-picker) {
+        width: 100% !important;
+    }
 }
 
