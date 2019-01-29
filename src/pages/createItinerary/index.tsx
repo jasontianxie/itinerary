@@ -221,7 +221,7 @@ class CreateItinerary extends React.Component<any, any> {
                             {formItems}
                             <Form.Item {...formItemLayoutWithOutLabel}>
                                 <Button type="dashed" onClick={this.add} style={{ width: "60%" }}>
-                                    <Icon type="plus" /> Add field
+                                    <Icon type="plus" /> 添加一个新的目的地
                                 </Button>
                             </Form.Item>
                             <FormItem {...tailFormItemLayout}>
