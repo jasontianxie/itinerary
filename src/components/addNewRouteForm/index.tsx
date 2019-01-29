@@ -155,6 +155,18 @@ class AddNewRouteForm extends React.Component<any, any> {
             <div styleName="fromWrap">
                 <Form onSubmit={this.handleSubmit}>
                     <FormItem
+                        label="行程时间"
+                        {...formItemLayout}
+                    >
+                        {getFieldDecorator("startEndDateTime", {
+                            rules: [{
+                                message: "请输入起止时间!", required: true,
+                            }],
+                        })(
+                            <RangePicker onChange={this.datePickerOnChange} showTime={true} format="YYYY-MM-DD HH:mm:ss" placeholder={["开始时间", "结束时间"]} />,
+                        )}
+                    </FormItem>
+                    <FormItem
                         label="选择出发地"
                         {...formItemLayout}
                     >
@@ -202,22 +214,10 @@ class AddNewRouteForm extends React.Component<any, any> {
                                 onSelect={(value) => this.onSelect(2, value)}
                                 onSearch={(value) => this.handleSearch(2, value)}
                                 onChange={(value) => this.spotNameChange(2, value)}
-                                placeholder="开始地点名称"
+                                placeholder="目的地地点名称"
                             >
                                 {children2}
                             </AutoComplete>,
-                        )}
-                    </FormItem>
-                    <FormItem
-                        label="行程时间"
-                        {...formItemLayout}
-                    >
-                        {getFieldDecorator("startEndDateTime", {
-                            rules: [{
-                                message: "请输入起止时间!", required: true,
-                            }],
-                        })(
-                            <RangePicker onChange={this.datePickerOnChange} showTime={true} format="YYYY-MM-DD HH:mm:ss" placeholder={["开始时间", "结束时间"]} />,
                         )}
                     </FormItem>
                     <FormItem

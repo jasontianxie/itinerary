@@ -2,12 +2,53 @@ import React from "react";
 import DocumentTitle from "react-document-title";
 import "./index.scss";
 import BMap from "BMap";
+import { Form, Input, InputNumber, DatePicker, Button, Col, Select, AutoComplete } from "antd";
+import LazyOptions from "../../components/cascader";
+import axios from "axios";
+import { config } from "../../common/ajaxConfig.js";
+import Cookies from "js-cookie";
 
-export default class DecorateMain extends React.Component<any, any> {
+const FormItem = Form.Item;
+const { RangePicker } = DatePicker;
+const AOption = AutoComplete.Option;
+
+class CreateItinerary extends React.Component<any, any> {
     public baiduMap: any = null;
     constructor(props: any) {
         super(props);
         this.baiduMap = React.createRef();
+    }
+    public handleSubmit(e: any) {
+        // e.persist();
+        e.preventDefault();
+        this.props.form.validateFieldsAndScroll((err: any, values: any) => {
+            if (!err) {
+                console.log({ ...this.state, ...{ startSpot: values.startSpot, endSpot: values.endSpot } });
+                this.setState({ startSpot: values.startSpot, endSpot: values.endSpot });
+                axios.post(config.mainDomain + "/newRouteForm", this.state).then((response) => {
+                    console.log("success");
+                })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        });
+    }
+    public datePickerOnChange(date: any, dateString: any) {
+        console.log(date, dateString);
+
+    }
+    public getlazyloadCascader(startSelect: number, state: any) {
+        console.log("getlazyloadCascader");
+    }
+    public onSelect(index: number, value: any) {
+        console.log("onSelect id is:", index === 1 ? "startSpot" : "endSpot", value);
+    }
+    public handleSearch = (index: number, value: any) => {
+        console.log("handle search");
+    }
+    public spotNameChange(index: number, value: any) {
+        console.log("spotNameChange");
     }
     public componentDidMount() {
         const map = new BMap.Map(this.baiduMap.current);
@@ -32,13 +73,113 @@ export default class DecorateMain extends React.Component<any, any> {
         });
     }
     public render() {
-    return (
-        <DocumentTitle title="创建行程">
-            <div styleName="wrap">
-                <div styleName="map" ref={this.baiduMap}>this is baidu map container</div>
-                <div styleName="routes"></div>
-            </div>
-        </DocumentTitle>
-        );
+        const { getFieldDecorator } = this.props.form;
+        const children1 = <AOption key="111">111</AOption>;
+        const children2 = <AOption key="222">222</AOption>;
+        const formItemLayout = {
+            labelCol: {
+                sm: { span: 6 },
+                xs: { span: 24 },
+            },
+            wrapperCol: {
+                sm: { span: 18 },
+                xs: { span: 24 },
+            },
+        };
+        const tailFormItemLayout = {
+            wrapperCol: {
+                sm: {
+                    offset: 6,
+                    span: 18,
+                },
+                xs: {
+                    offset: 0,
+                    span: 24,
+                },
+            },
+        };
+
+        return (
+            <DocumentTitle title="创建行程">
+                <div styleName="wrap">
+                    <div styleName="map" ref={this.baiduMap}>this is baidu map container</div>
+                    <div styleName="routes">
+                        <Form onSubmit={this.handleSubmit} style={{width: "520px"}}>
+                            <FormItem
+                                label="行程时间"
+                                {...formItemLayout}
+                            >
+                                {getFieldDecorator("startEndDateTime", {
+                                    rules: [{
+                                        message: "请输入起止时间!", required: true,
+                                    }],
+                                })(
+                                    <RangePicker onChange={this.datePickerOnChange} showTime={true} format="YYYY-MM-DD HH:mm:ss" placeholder={["开始时间", "结束时间"]} />,
+                                )}
+                            </FormItem>
+                            <FormItem
+                                label="选择出发地"
+                                {...formItemLayout}
+                            >
+                                <LazyOptions getlazyloadCascader={this.getlazyloadCascader} index={1} />
+                            </FormItem>
+                            <FormItem
+                                label="出发地具体名称"
+                                {...formItemLayout}
+                            >
+                                {getFieldDecorator("startSpot", {
+                                    rules: [{
+                                        message: "输入出发地!", required: true,
+                                    }],
+                                })(
+                                    <AutoComplete
+                                        // dataSource={dataSource1.map((item:any)=>item.fullname)}
+                                        style={{ width: "100%" }}
+                                        onSelect={(value) => this.onSelect(1, value)}
+                                        onSearch={(value) => this.handleSearch(1, value)}
+                                        onChange={(value) => this.spotNameChange(1, value)}
+                                        placeholder="开始地点名称"
+                                    >
+                                        {children1}
+                                    </AutoComplete>,
+                                )}
+                            </FormItem>
+                            <FormItem
+                                label="选择目的地"
+                                {...formItemLayout}
+                            >
+                                <LazyOptions getlazyloadCascader={this.getlazyloadCascader} index={2} />
+                            </FormItem>
+                            <FormItem
+                                label="目的地具体名称"
+                                {...formItemLayout}
+                            >
+                                {getFieldDecorator("endSpot", {
+                                    rules: [{
+                                        message: "输入目的地!", required: true,
+                                    }],
+                                })(
+                                    <AutoComplete
+                                        // dataSource={dataSource2.map((item:any)=>item.fullname)}
+                                        style={{ width: "100%" }}
+                                        onSelect={(value) => this.onSelect(2, value)}
+                                        onSearch={(value) => this.handleSearch(2, value)}
+                                        onChange={(value) => this.spotNameChange(2, value)}
+                                        placeholder="开始地点名称"
+                                    >
+                                        {children2}
+                                    </AutoComplete>,
+                                )}
+                            </FormItem>
+                            <FormItem {...tailFormItemLayout}>
+                                <Button type="primary" htmlType="submit">提交</Button>
+                            </FormItem>
+                        </Form>
+                    </div>
+                </div>
+            </DocumentTitle>
+            );
     }
 }
+
+export default Form.create()(CreateItinerary);

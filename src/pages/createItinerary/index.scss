@@ -1,6 +1,6 @@
 $main-back: #0f0;
-$route-back: #00f;
-$main-back-alpha: .1;
+$route-back: #aaa;
+$main-back-alpha: .9;
 $main-back-color: rgba($main-back, $main-back-alpha);
 $route-back-color: rgba($route-back, $main-back-alpha);
 
@@ -18,7 +18,7 @@ $route-back-color: rgba($route-back, $main-back-alpha);
     position: fixed;
     top: 40px;
     left: 0;
-    width: 500px;
+    width: 550px;
     height: 100%;
     background-color: $route-back-color;
 }
