@@ -39,6 +39,7 @@ export default class LazyOptions extends React.Component<any, any> {
   public render() {
     return (
       <Cascader
+        // defaultValue = {this.props.defaultValue} // defaultVale的数组中的值必须是和options中的value值对应
         options={this.state.options}
         loadData={this.loadData}
         onChange={this.onChange}

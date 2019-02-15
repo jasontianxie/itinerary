@@ -6,7 +6,7 @@ import { Form, Input, InputNumber, DatePicker, Button, Col, Select, AutoComplete
 import LazyOptions from "../../components/cascader";
 import axios from "axios";
 import { config } from "../../common/ajaxConfig.js";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 let id = 1;
 const FormItem = Form.Item;
@@ -17,7 +17,11 @@ class CreateItinerary extends React.Component<any, any> {
     public baiduMap: any = null;
     constructor(props: any) {
         super(props);
+        // this.state = {
+        //     defaultValue: null,
+        // };
         this.baiduMap = React.createRef();
+        this.handleMessage = this.handleMessage.bind(this);
     }
     public handleSubmit(e: any) {
         // e.persist();
@@ -75,27 +79,26 @@ class CreateItinerary extends React.Component<any, any> {
           keys: nextKeys,
         });
       }
+    public handleMessage(event: any) {
+            // 问题记录 http://note.youdao.com/noteshare?id=9d7e9ad73eb4f3740553eabc2d777476
+            event = event || window.event;
+
+            if (typeof(event.data) === "string" && event.data.indexOf("startSpot") > 0) {
+                // 监听了message消息过后，除了我们用postMessage发送的消息，
+                // 浏览器还会发送其他message消息，都会在这里被监听，所以要判断一下哪些消息才是我们需要的消息
+                console.log(JSON.parse(event.data));
+                // this.setState({defaultValue: event.data});
+            }
+        }
     public componentDidMount() {
         const map = new BMap.Map(this.baiduMap.current);
         const point = new BMap.Point(116.404, 39.915);
         map.centerAndZoom(point, 15);
-        window.addEventListener("message", () => {
-            if (window.addEventListener) {
-                window.addEventListener("message", handleMessage, false);
-            } else {
-                window.attachEvent("onmessage", handleMessage);
-            }
-            function handleMessage(event: any) {// 一个奇怪的现象，当收到postMessage消息后，这个handleMessage方法会被调用两次 ？？？
-                // 问题记录 http://note.youdao.com/noteshare?id=9d7e9ad73eb4f3740553eabc2d777476
-                event = event || window.event;
-
-                if (typeof(event.data) === "string" && event.data.indexOf("startSpot") > 0) {
-                    // 监听了message消息过后，除了我们用postMessage发送的消息，
-                    // 浏览器还会发送其他message消息，都会在这里被监听，所以要判断一下哪些消息才是我们需要的消息
-                    console.log(JSON.parse(event.data));
-                }
-            }
-        });
+        if (window.addEventListener) {
+            window.addEventListener("message", this.handleMessage, false);
+        } else {
+            window.attachEvent("onmessage", this.handleMessage);
+        }
     }
     public render() {
         const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -138,7 +141,11 @@ class CreateItinerary extends React.Component<any, any> {
                         label={`选择目的地${index + 1}`}
                         {...formItemLayout}
                     >
-                        <LazyOptions getlazyloadCascader={this.getlazyloadCascader} index={2} />
+                        <LazyOptions
+                            getlazyloadCascader={this.getlazyloadCascader}
+                            index={2}
+                            // defaultValue={this.state.defaultValue ? this.state.defaultValue.endSelect : null}
+                        />
                     </FormItem>
                     <FormItem
                         label={`目的地${index + 1}具体名称`}
@@ -195,7 +202,11 @@ class CreateItinerary extends React.Component<any, any> {
                                 label="选择出发地"
                                 {...formItemLayout}
                             >
-                                <LazyOptions getlazyloadCascader={this.getlazyloadCascader} index={1} />
+                                <LazyOptions
+                                    getlazyloadCascader={this.getlazyloadCascader}
+                                    index={1}
+                                    // defaultValue={this.state.defaultValue ? this.state.defaultValue.startSelect : null}
+                                />
                             </FormItem>
                             <FormItem
                                 style={{padding: "0 10px"}}
