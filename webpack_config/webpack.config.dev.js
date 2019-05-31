@@ -4,6 +4,9 @@
  const webpack = require('webpack');
 
  module.exports = merge(common, {
+  entry: {
+    app: ['./src/index.tsx', 'webpack-hot-middleware/client?reload=true']
+  },
    mode: 'development',
    devtool: 'inline-source-map',
    module:{

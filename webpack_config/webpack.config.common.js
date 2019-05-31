@@ -3,9 +3,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: {
-    app: ['./src/index.tsx', 'webpack-hot-middleware/client?reload=true']
-  },
   resolve:{
     extensions:['.tsx','.ts','.json','.js','.jsx','.scss']
   },
