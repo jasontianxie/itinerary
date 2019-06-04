@@ -14,7 +14,7 @@ import Header from "./components/header/index";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
-// add a push to trigger jenkins build test3
+// add a push to trigger jenkins build test4
 ReactDOM.render(
     <Provider store={store}>
     <HashRouter>
