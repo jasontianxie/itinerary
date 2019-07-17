@@ -5,4 +5,4 @@ npm install
 run this project in development：
 npm run dev
 
-#https://github.com/jasontianxie/itinerary
+#url: https://github.com/jasontianxie/itinerary
